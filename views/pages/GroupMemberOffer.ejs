@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>Group Member Offer</title>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js" xmlns="http://www.w3.org/1999/html"></script>
+<script type="text/javascript" src="/javascripts/notifyme.js"></script>
+<script type="text/javascript" src="/javascripts/typeahead.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //create a dynamic url
+        var hostproduct = location.protocol + '//' + location.host + '/searchproduct?key=%QUERY';
+        var hostservice = location.protocol + '//' + location.host + '/searchservice?key=%QUERY';
+        $('#typeahead').typeahead({
+            name: 'countries',
+            remote: hostproduct,
+            limit: 10
+        });
+        $('#typeaheadservice').typeahead({
+            name: 'service',
+            remote: hostservice,
+            limit: 10
+        })
+        $('#submit').on('click', function () {
+            var isChecked = $('#TradeOptionProduct').prop('checked')
+            var isCheckedS = $('#TradeOptionService').prop('checked')
+            if ((isChecked !== true) && (isCheckedS !== true)) {
+                $(this).notifyMe(
+                        'bottom', // Position
+                        'error', // Type
+                        'Trade Option', // Title
+                        'Trade option not specified', // Description
+                        200,// Velocity of notification
+                        2000 // (optional) Time of delay to close automatically
+                );
+                return;
+            }
+        });
+        $('input[type="radio"]').click(function () {
+            if ($(this).attr("value") == "Product") {
+                $("#ServiceCategories").hide();
+                $("#ServiceContent").hide();
+                $("#ProductCategories").show();
+                $("#ProductContent").show();
+                document.getElementById("option").value = "Product";
+            }
+            if ($(this).attr("value") == "Service") {
+                $("#ProductCategories").hide();
+                $("#ProductContent").hide();
+                $("#ServiceCategories").show();
+                $("#ServiceContent").show();
+                document.getElementById("optionS").value = "Service";
+            }
+
+        });
+        $("#ServiceCategories").hide();
+        $("#ServiceContent").hide();
+    });
+
+    function clearForm() {
+        document.getElementById("contact").reset();
+    }
+
+</script>
+</head>
+<div class="content">
+    <ul class="rd_trade">
+        <li>
+            <label for="TradeOption">Trade Option:</label>
+            <input type="radio" id="TradeOptionProduct" name="TradeOptionProduct" checked="true" onchange="clearForm()"
+                   value="Product">Product
+            <input type="radio" id="TradeOptionProduct" name="TradeOptionProduct" onchange="clearForm()"
+                   value="Service">Service
+        </li>
+    </ul>
+    <!--for product-->
+    <div id="ProductContent" name="ProductContent" class="content">
+        <form id="contact" class="contact_form" method="post" action="/GroupMemberOffer">
+            <fieldset>
+                <h1>Group Trade</h1>
+                <li>
+                    <h2 style="color: #ff0000">Offer Group Member: Product</h2>
+                </li>
+                <li class="bs-example">
+                    <label for="tags" style="color:#00b7ff;">Search Product:</label>
+                    <input type="text" ID="typeahead" name="typeahead" class="typeahead tt-query" autocomplete="off"
+                           spellcheck="false"
+                           placeholder="Search for your products" required="true" title="No product searched">
+                </li>
+                <br>
+                <li>
+                    <label for="tags" style="color:#00b7ff;">Group Name:</label>
+                    <input type="text" id="GroupName" name="GroupName" value="<%= GroupName %>" readonly="true"
+                           required="true" title="No Group Name"/>
+                </li>
+                <br>
+                <li>
+                    <label for="tags" style="color:#00b7ff;">Offer Member:</label>
+                    <input type="text" id="MemberName" name="MemberName" value="<%= Name %>" readonly="true"
+                           required="true" title="No Member"/>
+                </li>
+                <li>
+                    <input type="text" id="option" name="option" value="" required="true"
+                           title="Please Select and Option" hidden="true"/>
+                </li>
+                <br><br>
+                <li class="submit">
+                    <input type="button" name="clear" id="clear" value="Cancel" onclick="clearForm()"/>
+                    <input type="submit" name="submit" id="submit" value="Send Offer"/>
+                </li>
+
+            </fieldset>
+        </form>
+    </div>
+    <!--for service-->
+    <div id="ServiceContent" name="ServiceContent" class="content">
+        <form id="contact" class="contact_form" method="post" action="/GroupMemberOffer">
+            <h1>Group Trade</h1>
+            <li>
+                <h2 style="color: #ff0000">Offer Group Member: Service</h2>
+            </li>
+            <li class="bs-example">
+                <label for="typeahead" style="color:#00b7ff;">Search Service:</label>
+                <input type="text" id="typeaheadservice" name="typeaheadservice" class="typeahead tt-query"
+                       autocomplete="off" spellcheck="false"
+                       placeholder="Search for your services">
+            </li>
+            <br>
+            <li>
+                <label for="tags" style="color:#00b7ff;">Group Name:</label>
+                <input type="text" id="GroupName" name="GroupName" value="<%= GroupName %>" readonly="true"
+                       required="true" title="No Group Name"/>
+            </li>
+            <br>
+            <li>
+                <label for="tags" style="color:#00b7ff;">Offer Member:</label>
+                <input type="text" id="MemberName" name="MemberName" value="<%= Name %>" readonly="true" required="true"
+                       title="No Member"/>
+            </li>
+            <li>
+                <input type="text" id="optionS" name="optionS" value="" required="true"
+                       title="Please Select and Option" hidden="true"/>
+            </li>
+            <br><br>
+            <li class="submit">
+                <input type="button" name="clear" id="clear" value="Cancel" onclick="clearForm()"/>
+                <input type="submit" name="submit" id="submit" value="Send Offer"/>
+            </li>
+
+        </form>
+    </div>
+</div>
+<% include ../partials/footer %>

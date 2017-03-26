@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>My Groups</title>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+</head>
+<div class="content">
+    <form class="data_details" method="Get" action="/MyGroups" name="contact_form" xmlns="http://www.w3.org/1999/html">
+        <h1 style="color: #00b7ff">My Groups</h1>
+    <% if(data.length) {
+    for(var i = 0;i < data.length;i++) { %>
+        <div class="product-detail">
+            <img src="/images/<%= data[i].GroupIcon %>">
+        <div class="article">
+            <h3><%= data[i].GroupName %></h3>
+            <a class="delete"  href="/MyMembers/<%=data[i].GroupID%>">Members</a>
+            <a class="delete"  href="/MyGroups/<%=data[i].GroupID%>">Delete</a>
+        </div>
+    </div>
+
+    <% }
+    }else{ %>
+        <br>
+
+        <div class="records">
+            <strong>No Records</strong><br>
+            <span>You have not created group(s) to  trade with in your account</span>
+        </div>
+    <% } %>
+        </form>
+</div>
+</div>
+<% include ../partials/footer %>

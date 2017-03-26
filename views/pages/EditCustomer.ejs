@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>Edit Customer</title>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#uploadPreview0").click(function () {
+            $("input[id='uploadImage0']").click();
+        });
+    });
+    function PreviewImage() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("uploadphoto").files[0]);
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("uploadPreview0").src = oFREvent.target.result;
+        };
+
+    };
+    function checkForm(form)
+    {
+        if(form.username.value == "") {
+            alert("Error: Username cannot be blank!");
+            form.username.focus();
+            return false;
+        }
+        var re = /^\w+$/;
+        if(!re.test(form.username.value)) {
+            alert("Error: Username must contain only letters, numbers and underscores!");
+            form.username.focus();
+            return false;
+        }
+        if(form.Password.value != "" && form.Password.value == form.ConfirmPassword.value) {
+            if(form.Password.value.length < 6) {
+                alert("Error: Password must contain at least six characters!");
+                form.Password.focus();
+                return false;
+            }
+            if(form.Password.value == form.username.value) {
+                alert("Error: Password must be different from Username!");
+                form.Password.focus();
+                return false;
+            }
+            re = /[0-9]/;
+            if(!re.test(form.Password.value)) {
+                alert("Error: password must contain at least one number (0-9)!");
+                form.Password.focus();
+                return false;
+            }
+            re = /[a-z]/;
+            if(!re.test(form.Password.value)) {
+                alert("Error: password must contain at least one lowercase letter (a-z)!");
+                form.Password.focus();
+                return false;
+            }
+            re = /[A-Z]/;
+            if(!re.test(form.Password.value)) {
+                alert("Error: password must contain at least one uppercase letter (A-Z)!");
+                form.Password.focus();
+                return false;
+            }
+        } else {
+            alert("Error: Please check that you've entered and confirmed your password!");
+            form.Password.focus();
+            return false;
+        }
+
+        alert("You entered a valid password: " + form.Password.value);
+        return true;
+    }
+    function clearForm() {
+        document.getElementById("contact").reset();
+    }
+</script>
+</head>
+<div class="content">
+    <form class="contact_form" id="contact" method="post" action="/EditCustomer" onsubmit="return checkForm(this)"enctype="multipart/form-data">
+        <%for (var i in result){%>
+        <ul>
+            <li>
+                <h6 style="color: #00b7ff">Edit Details</h6>
+                <span class="required">All the fields marked with * are required </span>
+            </li>
+            <li>
+                <label for="Firstname">First name: *</label>
+                <input id="first-name" type="text" name="FirstName" value="<%=result[i].FirstName%>" required="required" title="Please Enter your FirstName" value=""/>
+            </li>
+            <li class="up_img">
+                <img src="/images/<%= result[i].ProfilePicture%>" id="uploadPreview0" style="width: 100px; height: 100px;" border="0" />
+                <input id="uploadphoto" type="file" name="myPhoto0" onchange="PreviewImage()">
+            </li>
+            <!--<input id="uploadImage0" type="file" name="myPhoto0" style="display: none;"  onchange="PreviewImage0();" required="required" title="Please upload photo" />-->
+            <li>
+                <label for="Lastname">Last Name: *</label>
+                <input id="Last-name" type="text" name="LastName" value="<%=result[i].LastName%>"required="required" title="Please Enter your LastName or Surname" value=""/>
+            </li>
+
+            <li>
+                <label for="MiddleName">Middle Name:</label>
+                <input id="Middle-name" type="text" name="MiddleName" value="<%=result[i].MiddleName%>"/>
+            </li>
+            <li>
+                <label for="DOB">Date of Birth: *</label>
+                <input id="dob" type="date" name="DOB" value="<%=result[i].DateofBirth%>"required="required" title="Please specify your date of birth" value=""/>
+            </li>
+            <li>
+                <label>Email: *</label>
+                <input type="email" name="email" value="<%=result[i].EmailAddress%>"required="required" title="Please enter your email address">
+            </li>
+            <li>
+                <label for="Gender">Gender:</label>
+                <select name="Gender" required="required" title="Please Specify Gender">
+                    <%for (var i in result){%>
+                    <option><%=result[i].Gender%></option>
+                        <%}%>
+                    <option>Male</option>
+                    <option>Female</option>
+                </select>
+            </li>
+            <li class="submit">
+                <input type="button" name="clear" id="clear" value="Cancel" onclick="clearForm()" />
+                <input type="submit" name="submit" id="submit" value="Update" />
+            </li>
+        </ul>
+        <%}%>
+    </form>
+</div>
+<% include ../partials/footer %>

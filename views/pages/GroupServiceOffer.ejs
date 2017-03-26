@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>Group Service Offer</title>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#ChkDecline").click(function () {
+            document.getElementById('Decline').value = "Declined";
+        });
+    });
+</script>
+</head>
+<div class="content">
+    <!--for showing Group product offers-->
+    <div id="ServiceContent" name="ServiceContent" class="content">
+        <form class="contact_form" method="POST" action="" name="contact_form"
+              xmlns="http://www.w3.org/1999/html">
+            <h1 style="color: #00b7ff">Group Offer</h1>
+            <% if(!GroupTrade.length){ %>
+            <div class="records">
+                <strong>Offer Completed</strong><br>
+                <span>Offer/Transaction Completed !. Link expired</span>
+            </div>
+            <% }else{ %>
+            <% for (var i in GroupTrade){ %>
+            <h3 style="color: #ff0000">Group Name: <%= GroupTrade[i].GroupName %></h3>
+            <!--  <div class="member">-->
+            <div class="member mem_format">
+                <table class="pro-detail">
+                    <tr>
+                        <td>
+                            <strong>Name</strong>:
+                        </td>
+                        <td class="format_name">
+                            <%= GroupTrade[i].ServiceName %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Service Description</strong>:
+                        </td>
+                        <td>
+                            <%= GroupTrade[i].ServiceDescription %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Publised Date</strong>:
+                        </td>
+                        <td>
+                            <%= GroupTrade[i].PublishedDate.toLocaleDateString() %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Category:</strong>:
+                        </td>
+                        <td class="format_catname">
+                            <%= GroupTrade[i].ServiceCatName %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Duration</strong>:
+                        </td>
+                        <td class="format_con">
+                            <%= GroupTrade[i].Duration %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Start Date</strong>:
+                        </td>
+                        <td class="format_value">
+                            <%= GroupTrade[i].StartDate.toLocaleDateString() %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>End Date</strong>:
+                        </td>
+                        <td>
+                            <%= GroupTrade[i].EndDate.toLocaleDateString() %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Preferred Service:</strong>:
+                        </td>
+                        <td>
+                            <%= GroupTrade[i].PreferredService %>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            <% } %>
+            <div class="submit_offer">
+                <input type="text" name="Decline" id="Decline" value="" hidden="true"/>
+                <input type="submit" name="submit" id="submit" value="Interested"/>
+                <input type="submit" name="ChkDecline" id="ChkDecline" value="Decline"/>
+            </div>
+            <% } %>
+        </form>
+    </div>
+</div>
+<% include ../partials/footer %>

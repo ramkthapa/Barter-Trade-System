@@ -1,0 +1,41 @@
+<!doctype html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>NearBy Trading</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/stylesheets/styles.css">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<div class="content">
+    <h1 style="color: #00b7ff">NearBy Traders</h1>
+
+    <h3 style="color: #ff0000;">Trade Products and Services with users near you!.</h3>
+    <span class="note">Click on Marker to contact customer </span>
+    <input type="text" id="uname" value="<%= userlogin %>" hidden="true"/>
+    <input type="text" id="uID" value="<%= userID %>" hidden="true"/>
+    <div class="app">
+        <div class="loading"></div>
+        <div id="infobox" class="infobox"></div>
+        <div id="map">Enable your location on your device or computer<br>to enable map to work.</div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<script src="/javascripts/leaflet.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascripts/clientjavascripts/application.js"></script>
+</body>
+
+</html>
+<% include ../partials/footer %>

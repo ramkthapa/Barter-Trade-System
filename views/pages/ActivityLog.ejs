@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>Activity Log</title>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
+<script  type="text/javascript" src="/javascripts/typeahead.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //create a dynamic url
+        var host = location.protocol + '//' + location.host + '/productsearch?key=%QUERY';
+        $('input.typeahead').typeahead({
+            name: 'countries',
+            remote: host,
+            limit: 10
+        });
+    })
+</script>
+    <!-- for table decoration-->
+    <script type="text/javascript">
+        function altRows(id) {
+            if (document.getElementsByTagName) {
+
+                var table = document.getElementById(id);
+                var rows = table.getElementsByTagName("tr");
+
+                for (i = 0; i < rows.length; i++) {
+                    if (i % 2 == 0) {
+                        rows[i].className = "evenrowcolor";
+                    } else {
+                        rows[i].className = "oddrowcolor";
+                    }
+                }
+            }
+        }
+        window.onload = function () {
+            altRows('alternatecolor');
+        }
+    </script>
+</head>
+<div class="content">
+    <div id ="ProductContent" name="ProductContent"class="content">
+        <form class="contact_form" method="Get" name="contact_form" xmlns="http://www.w3.org/1999/html">
+            <h1 style="color: #00b7ff">Activity Log</h1>
+           <div class="add_mem">
+               <table>
+                        <tr class="act_log">
+                            <th>Activity</th>
+                            <th>Date-Time</th>
+                        </tr>
+               </table>
+               <div class="tab_content">
+                   <table class="altrowstable" id="alternatecolor">
+                        <%for (var i in data){%>
+                        <tr>
+                            <td> <%=data[i].ActivityName%></td>
+                            <td><%=data[i].ActivityDateTime.toLocaleDateString()%>', '<%=data[i].ActivityDateTime.toLocaleTimeString()%></td>
+                        </tr>
+
+                        <%}%>
+                   </table>
+               </div>
+           </div>
+        </form>
+</div>
+</div>
+<% include ../partials/footer %>

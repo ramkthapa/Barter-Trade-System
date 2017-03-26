@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head><title>Ping Service Offers</title></head>
+<!--for showing services-->
+<div id="ServiceContent" name="ServiceContent" class="content">
+    <form class="contact_form" method="Get" action="" name="contact_form" xmlns="http://www.w3.org/1999/html">
+        <h1>My Service Offers</h1>
+
+        <h3><%= Message %></h3>
+        <% if(!serviceresults.length){ %>
+        <div class="records">
+            <span>No Records</span><br>
+            <span>You have not offered any service</span>
+        </div>
+        <% } %>
+        <% for (var i in serviceresults){ %>
+        <div class="member mem_format">
+
+            <table class="pro-detail pro_format">
+
+                <tr>
+                    <td>
+                        <strong>Service Name</strong>:
+                    </td>
+                    <td>
+                        <%= serviceresults[i].ServiceName %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Service Details</strong>:
+                    </td>
+                    <td>
+                        <%= serviceresults[i].ServiceDescription %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Published Date</strong>:
+                    </td>
+                    <td>
+                        <%= serviceresults[i].PublishedDate.toDateString() %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Duration</strong>:
+                    </td>
+                    <td>
+                        <%= serviceresults[i].Duration %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Start Date</strong>:
+                    </td>
+                    <td>
+                        <%= serviceresults[i].StartDate.toDateString() %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>End Date</strong>:
+                    </td>
+                    <td>
+                        <%= serviceresults[i].EndDate.toDateString() %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Preferred Service</strong>:
+                    </td>
+                    <td>
+                        <%= serviceresults[i].PreferredService %>
+                    </td>
+                </tr>
+            </table>
+            <div class="customer_delete">
+                <span><a class="delete"
+                         href="/PingServiceResponse/<%= GetPingID %>/<%= serviceresults[i].ServiceOfferID %>">Ping
+                        Trader!</a></span>
+                <span><a class="delete" href="/ServiceMessages/<%= serviceresults[i].ServiceOfferID %>">Contact
+                        Trader!</a></span>
+            </div>
+        </div>
+        <% } %>
+    </form>
+</div>
+<% include ../partials/footer %>

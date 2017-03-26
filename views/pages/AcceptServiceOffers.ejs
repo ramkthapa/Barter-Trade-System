@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title></title>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#ChkDecline").click(function () {
+            document.getElementById('Decline').value = "Declined";
+        });
+    });
+</script>
+</head>
+    <!--for showing product offers-->
+<div id="ServiceContent" name="ServiceContent" class="content">
+        <form class="contact_form" method="POST" action="" name="contact_form" xmlns="http://www.w3.org/1999/html">
+            <h1 style="color:  #00b7ff">Accept Offer</h1>
+            <% if(!FirstCustomerResults.length){ %>
+            <div class="records">
+                <strong>Offer Completed</strong><br>
+                <span>Offer/Transaction Completed</span>
+            </div>
+            <% }else{ %>
+            <% for (var i in FirstCustomerResults){ %>
+            <!--  <div class="member">-->
+            <div class="member mem_format">
+                <h3 style="color: #000000"><%= FirstCustomerResults[i].FirstName %>'s Offer</h3>
+                <table class="pro-detail">
+                    <tr>
+                        <td>
+                            <strong>Service Name</strong>:
+                        </td>
+                        <td class="format_name">
+                            <%= FirstCustomerResults[i].ServiceName %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Service Description</strong>:
+                        </td>
+                        <td>
+                            <%= FirstCustomerResults[i].ServiceDescription %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Published Date</strong>:
+                        </td>
+                        <td>
+                            <%= FirstCustomerResults[i].PublishedDate.toDateString() %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Duration</strong>:
+                        </td>
+                        <td class="format_con">
+                            <%= FirstCustomerResults[i].Duration %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Start Date</strong>:
+                        </td>
+                        <td>
+                            <%= FirstCustomerResults[i].StartDate.toDateString() %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>End Date</strong>:
+                        </td>
+                        <td>
+                            <%= FirstCustomerResults[i].EndDate.toDateString() %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Preferred Service:</strong>:
+                        </td>
+                        <td class="format_value">
+                            <%= FirstCustomerResults[i].PreferredService %>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <% } %>
+            <div class="swap_service"><img src="/images/favicon.png" width="90" height="90"></div>
+            <% for (var i in SecondCustomerResults){ %>
+            <div class="member mem_format">
+                <h3 style="color: #000000;;"><%= SecondCustomerResults[i].FirstName %>'s Offer</h3>
+                <table class="pro-detail">
+                    <tr>
+                        <td>
+                            <strong>Name</strong>:
+                        </td>
+                        <td class="format_name">
+                            <%= SecondCustomerResults[i].ServiceName %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Service Description</strong>:
+                        </td>
+                        <td>
+                            <%= SecondCustomerResults[i].ServiceDescription %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Published Date</strong>:
+                        </td>
+                        <td>
+                            <%= SecondCustomerResults[i].PublishedDate.toDateString() %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Duration</strong>:
+                        </td>
+                        <td class="format_con">
+                            <%= SecondCustomerResults[i].Duration %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Start Date</strong>:
+                        </td>
+                        <td>
+                            <%= SecondCustomerResults[i].StartDate.toDateString() %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>End Date:</strong>:
+                        </td>
+                        <td>
+                            <%= SecondCustomerResults[i].EndDate.toDateString() %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Preferred Service</strong>:
+                        </td>
+                        <td class="format_value">
+                            <%= SecondCustomerResults[i].PreferredService %>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <% } %>
+            <div class="submit_offer">
+                <input type="text" value="" id="Decline" name="Decline" hidden="true">
+                <input type="submit" name="submit" id="submit" value="Accept Offer"/>
+                <input type="submit" name="ChkDecline" id="ChkDecline" value="Decline Offer"/>
+            </div>
+            <% } %>
+        </form>
+    </div>
+<% include ../partials/footer %>

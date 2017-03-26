@@ -1,0 +1,44 @@
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<link rel="stylesheet" type="text/css" href='/stylesheets/chat.css' xmlns="http://www.w3.org/1999/html"/>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<script type="text/javascript" src="/javascripts/notifyme.js"></script>
+<script src="/javascripts/clientjavascripts/chat.js"></script>
+<div class="content">
+    <h3 style="color: lightskyblue; margin-left: 150px">Welcome: <%= userlogin %></h3>
+
+    <div class="chat-box">
+        <span class="chat_with">Chatting with: <span id="selectedCustomerName"></span></span>
+
+        <div class="right">
+            <!-- for showing online users from socket. That is uses who has join the chat socket-->
+            <!-- <div id="users"></div> -->
+            <span class="online-head">All Online Users</span>
+
+            <div id="usersOnLine">
+                <span id="onlineusers" name="onlineusers"></span>
+            </div>
+        </div>
+
+        <div class="left">
+            <span id="typingmsg"></span>
+
+            <div id="conversation">
+                <!--  <div id="sender"><p></p></div>
+               <!--  &ndash;&gt; <div id="receiver"><p></p></div>-->
+            </div>
+        </div>
+        <input type="text" id="myusername" value="<%= userlogin %>" hidden="true"/>
+        <input type="text" id="myuserID" value="<%= userID %>" hidden="true"/>
+
+        <div class="chat-text">
+            <input id="data" style="width: 508px; height: 40px; border-radius: 9px; border: none">
+            <button id="snapimage"></button>
+            <li class="submit_chat">
+                <input type="button" id="datasend" value="send"/>
+            </li>
+        </div>
+    </div>
+</div>
+<% include ../partials/footer %>

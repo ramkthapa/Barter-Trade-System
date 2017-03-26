@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<%include ../partials/header %>
+<%include ../partials/navigation %>
+<script type="text/javascript">
+    function altRows(id) {
+        if (document.getElementsByTagName) {
+
+            var table = document.getElementById(id);
+            var rows = table.getElementsByTagName("tr");
+
+            for (i = 0; i < rows.length; i++) {
+                if (i % 2 == 0) {
+                    rows[i].className = "evenrowcolor";
+                } else {
+                    rows[i].className = "oddrowcolor";
+                }
+            }
+        }
+    }
+    window.onload = function () {
+        altRows('alternatecolor');
+    }
+</script>
+<head>
+    <title>Notifications</title>
+</head>
+<div class="content">
+    <div id ="ProductContent" name="ProductContent"class="content">
+        <form class="contact_form" method="Get" name="contact_form" xmlns="http://www.w3.org/1999/html">
+    <h1>Notifications</h1>
+    <div class="add_mem">
+        <table>
+            <tr class="act_log">
+                <th class="lf">From</th>
+                <th class="md">Details</th>
+                <th class="rt">Date</th>
+            </tr>
+        </table>
+        <div class="tab_content">
+            <table class="altrowstable" id="alternatecolor">
+            <%for (var i in NDetails){%>
+            <tr>
+                <td><%=NDetails[i].FirstName%> <%=NDetails[i].LastName%></td>
+                <td><%=NDetails[i].NotificationDetails%></td>
+                <td><%=NDetails[i].NotificationDate.toLocaleDateString()%></td>
+            </tr>
+            <%}%>
+        </table>
+        </div>
+    </div>
+        </form>
+    </div>
+</div>
+<% include ../partials/footer %>

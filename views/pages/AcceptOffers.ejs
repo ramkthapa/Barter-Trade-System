@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>Accept Product Offers</title>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#ChkDecline").click(function () {
+                document.getElementById('Decline').value = "Declined";
+            });
+        });
+
+    </script>
+</head>
+    <!--for showing product offers-->
+    <div id="ProductContent" name="ProductContent" class="content">
+        <form class="contact_form" method="POST" action="" name="contact_form" xmlns="http://www.w3.org/1999/html">
+            <h1 style="color:  #00b7ff">Accept Offer</h1>
+            <%if(!FirstCustomerResults.length){%>
+            <div class="records">
+                <strong>Offer Completed</strong><br>
+                <span>Offer/Transaction Completed</span>
+            </div>
+            <% }else{ %>
+            <%for (var i in FirstCustomerResults){%>
+            <!--  <div class="member">-->
+            <div class="member mem_format">
+                <h3 style="color: #000000"><%= FirstCustomerResults[i].FirstName %>'s Offer</h3>
+                <table class="pro-detail">
+                    <tr>
+                        <td>
+                            <strong>Name</strong>:
+                        </td>
+                        <td class="format_name">
+                            <%=FirstCustomerResults[i].ProductName %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Offer Details</strong>:
+                        </td>
+                        <td>
+                            <%=FirstCustomerResults[i].OfferDetails  %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Offer Date</strong>:
+                        </td>
+                        <td>
+                            <%= FirstCustomerResults[i].OfferDate.toDateString() %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                            <strong>Condition</strong>:
+                        </td>
+                        <td class="format_con">
+                            <%= FirstCustomerResults[i].Condition %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                            <strong>Product Value</strong>:
+                        </td>
+                        <td class="format_value">
+                            <%=FirstCustomerResults[i].ValueCurrency%>  <%= FirstCustomerResults[i].ProductValue %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Pro.Time</strong>:
+                        </td>
+                        <td>
+                            <%=FirstCustomerResults[i].ProcessingTime %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Ships To:</strong>:
+                        </td>
+                        <td>
+                            <%=FirstCustomerResults[i].ShipsTo %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Ship Cost</strong>:
+                        </td>
+                        <td class="format_value">
+                            <%=FirstCustomerResults[i].shipCurrencyName%>  <%= FirstCustomerResults[i].ShippingCost %>
+                        </td>
+                    </tr>
+                </table>
+                <ul class="enlarge">
+                    <!--We give the list a class so that we can style it seperately from other unordered lists-->
+                    <li>
+                        <img src="/images/<%= FirstCustomerResults[i].img0 %>" width="150px" height="100px"/>
+                    <span> <!--span contains the popup image-->
+                    <img src="/images/<%= FirstCustomerResults[i].img0 %>" alt="Deckchairs"/>
+                    </span>
+                    </li>
+                    <li>
+                        <img src="/images/<%= FirstCustomerResults[i].img1 %>" width="150px" height="100px"/>
+                         <span> <!--span contains the popup image-->
+                    <img src="/images/<%= FirstCustomerResults[i].img1 %>" alt="Deckchairs"/>
+                    </span>
+                    </li>
+                    <li>
+                        <img src="/images/<%= FirstCustomerResults[i].img2 %>" width="150px" height="100px"/>
+                     <span> <!--span contains the popup image-->
+                    <img src="/images/<%= FirstCustomerResults[i].img2 %>" alt="Deckchairs"/>
+                    </span>
+                    </li>
+                    <li>
+                        <img src="/images/<%= FirstCustomerResults[i].img3 %>" width="150px" height="100px"/>
+                         <span> <!--span contains the popup image-->
+                    <img src="/images/<%= FirstCustomerResults[i].img3 %>" alt="Deckchairs"/>
+                    </span>
+                    </li>
+                </ul>
+            </div>
+            <%}%>
+            <div class="swap"><img src="/images/favicon.png" width="90" height="90"></div>
+            <%for (var i in SecondCustomerResults){%>
+            <div class="member mem_format">
+                <h3 style="color: #000000;;"><%= SecondCustomerResults[i].FirstName %>'s Offer</h3>
+                <table class="pro-detail">
+                    <tr>
+                        <td>
+                            <strong>Name</strong>:
+                        </td>
+                        <td class="format_name">
+                            <%=SecondCustomerResults[i].ProductName %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Offer Details</strong>:
+                        </td>
+                        <td>
+                            <%=SecondCustomerResults[i].OfferDetails  %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Offer Date</strong>:
+                        </td>
+                        <td>
+                            <%= SecondCustomerResults[i].OfferDate.toDateString() %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                            <strong>Condition</strong>:
+                        </td>
+                        <td class="format_con">
+                            <%= SecondCustomerResults[i].Condition %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                            <strong>Product Value</strong>:
+                        </td>
+                        <td class="format_value">
+                            <%=SecondCustomerResults[i].ValueCurrency%>  <%= SecondCustomerResults[i].ProductValue %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Pro.Time</strong>:
+                        </td>
+                        <td>
+                            <%=SecondCustomerResults[i].ProcessingTime %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Ships To:</strong>:
+                        </td>
+                        <td>
+                            <%=SecondCustomerResults[i].ShipsTo %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Ship Cost</strong>:
+                        </td>
+                        <td class="format_value">
+                            <%=SecondCustomerResults[i].shipCurrencyName%>  <%= SecondCustomerResults[i].ShippingCost %>
+                        </td>
+                    </tr>
+                </table>
+                <ul class="enlarge">
+                    <!--We give the list a class so that we can style it seperately from other unordered lists-->
+                    <li>
+                        <img src="/images/<%= SecondCustomerResults[i].img0 %>" width="150px" height="100px"/>
+                    <span> <!--span contains the popup image-->
+                    <img src="/images/<%=SecondCustomerResults[i].img0 %>" alt="Deckchairs"/>
+                    </span>
+                    </li>
+                    <li>
+                        <img src="/images/<%= SecondCustomerResults[i].img1 %>" width="150px" height="100px"/>
+                         <span> <!--span contains the popup image-->
+                    <img src="/images/<%= SecondCustomerResults[i].img1 %>" alt="Deckchairs"/>
+                    </span>
+                    </li>
+                    <li>
+                        <img src="/images/<%= SecondCustomerResults[i].img2 %>" width="150px" height="100px"/>
+                     <span> <!--span contains the popup image-->
+                    <img src="/images/<%= SecondCustomerResults[i].img2 %>" alt="Deckchairs"/>
+                    </span>
+                    </li>
+                    <li>
+                        <img src="/images/<%= SecondCustomerResults[i].img3 %>" width="150px" height="100px"/>
+                         <span> <!--span contains the popup image-->
+                    <img src="/images/<%= SecondCustomerResults[i].img3 %>" alt="Deckchairs"/>
+                    </span>
+                    </li>
+                </ul>
+            </div>
+            <%}%>
+            <div class="submit_offer">
+                <input type="text" value="" id="Decline" name="Decline" hidden="true">
+                <input type="submit" name="submit" id="submit" value="Accept Offer" />
+                <input type="submit" name="ChkDecline" id="ChkDecline" value="Decline Offer" />
+            </div>
+            <% } %>
+        </form>
+    </div>
+    </div>
+<% include ../partials/footer %>

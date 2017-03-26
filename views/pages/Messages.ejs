@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>Message</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/javascripts/notifyme.js"></script>
+    <script type="text/javascript" src="/javascripts/typeahead.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var searchcustomer = location.protocol + '//' + location.host + '/search?key=%QUERY';
+            var searchemail = location.protocol + '//' + location.host + '/searchemail';
+            var host = location.protocol + '//' + location.host + '/sendmessages';
+            var to, subject, text;
+            $('input.typeahead').typeahead({
+                order: "asc",
+                name: 'countries',
+                remote: searchcustomer,
+                limit: 10
+            });
+            $("#typeahead").keyup(function () {
+                customername = $("#typeahead").val();
+                $.get(searchemail, {name: customername}, function (data) {
+                    if (data) {
+                        $("#to").val(data);
+                    }
+                })
+            });
+            $("#typeahead").mouseleave(function () {
+                customername = $("#typeahead").val();
+                $.get(searchemail, {name: customername}, function (data) {
+                    if (data) {
+                        $("#to").val(data);
+                    }
+                })
+            });
+            $("#send_email").click(function () {
+                if (validateform() == false) {
+                    return;
+                }
+                to = $("#to").val();
+                subject = $("#subject").val();
+                text = $("#content").val();
+                $("#message").text("Sending E-mail...Please wait");
+                $.get(host, {to: to, subject: subject, text: text}, function (data) {
+                    if (data == "sent") {
+                        notify();
+                        clearForm();
+                    }
+                    $("#message").empty();
+
+                });
+            });
+        });
+        function validateform() {
+            if (document.getElementById("to").value == "") {
+                errornotify('Please specify which customer you are sending message to')
+                return false
+
+            } else if (document.getElementById("subject").value == "") {
+                errornotify('Please, specify the subject of the your message')
+                return false
+            } else if (document.getElementById("message").value == "") {
+                errornotify('Please, message content cannot not be empty or blank')
+                return false
+            } else {
+                return true
+            }
+
+        }
+        function clearForm() {
+            document.getElementById("contact").reset();
+        }
+        function notify() {
+            $(this).notifyMe(
+                    'bottom', // Position
+                    'success', // Type
+                    'Message Sent', // Title
+                    'Your message has successfully been delivered to customer', // Description
+                    200,// Velocity of notification
+                    2000 // (optional) Time of delay to close automatically
+            );
+        }
+        function errornotify(errmsg) {
+            $(this).notifyMe(
+                    'bottom', // Position
+                    'error', // Type
+                    'Required Field *', // Title
+                    errmsg, // Description
+                    200,// Velocity of notification
+                    2000 // (optional) Time of delay to close automatically
+            );
+        }
+    </script>
+</head>
+<div class="content">
+    <form id="contact" class="contact_form">
+        <ul>
+            <li>
+                <h1 style="color: #00b7ff">Private Message</h1>
+
+                <h3 style="color: orangered">Contacting... <%= Name %></h3>
+            </li>
+            <li class="bs-example">
+                <label for="tags" style="color:green;">Recipient Name*:</label>
+                <input type="text" id="typeahead" name="typeahead" class="typeahead tt-query" autocomplete="off"
+                       spellcheck="false" placeholder="Search for Customer">
+            </li>
+            <li>
+                <label for="tags">Recipient Email* :</label>
+                <!--  <input id="tags" name="tags">-->
+                <input id="to" name="to" type="text" style="color:black;" value="<%= Email %>" readonly="true"
+                       placeholder="Recipient E-mail ID" required="true" title="Please email is required!"/>
+            <li>
+                <label for="Subject">Subject* :</label>
+                <input id="subject" type="text" placeholder="Write Subject" required="true"
+                       title="Please enter the subject of your message"/>
+            </li>
+            <li>
+                <label for="Message">Message* :</label>
+            <textarea class="private_text" id="content" required="true" title="Please message content cannot be empty"
+                      placeholder="Please type your message to the customer here"></textarea>
+            </li>
+            <li class="submit">
+                <input type="button" name="clear" id="clear" value="Cancel" onclick="clearForm()"/>
+                <input type="button" id="send_email" value="Send Mail"/>
+                <span id="message"></span>
+            </li>
+        </ul>
+    </form>
+</div>
+<% include ../partials/footer %>

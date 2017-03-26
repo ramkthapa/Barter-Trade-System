@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<%include ../partials/header %>
+<%include ../partials/navigation %>
+<head>
+    <title>Add Group Member</title>
+<script  type="text/javascript" src="/javascripts/typeahead.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        //create a dynamic url
+        var host = location.protocol + '//' + location.host + '/searchgroup?key=%QUERY';
+        $('input.typeahead').typeahead({
+            name: 'countries',
+            remote: host,
+            limit: 10
+        });
+    });
+    function clearForm() {
+        document.getElementById("contact").reset();
+    }
+</script>
+</head>
+<div class="content">
+<form id="contact" class="contact_form" method="post" action="/GroupMembers">
+    <ul>
+        <!-- show any messages that come back with authentication -->
+        <h2>Add Group Members</h2>
+        <li>
+            <label for="name">Select Group:</label>
+            <select name="GroupName" required="true" title="Please select a group">
+                <%for (var i in YourGroups){%>
+                <option><%=YourGroups[i]%>
+                    <%}%>
+            </select>
+        </li>
+        <br>
+        <li class="bs-example">
+            <label for="SelectFriend">Add Friends:</label>
+            <input type="text" name="typeahead" class="typeahead tt-query" autocomplete="off" spellcheck="false"
+                   placeholder="Search for Customer" required="true"
+                   title="No friend selected. Please search and add friend to select group">
+        </li>
+        <br>
+        <li class="submit">
+            <input type="button" name="Cancel" id="Cancel" value="Cancel" onclick="clearForm()" />
+            <input type="submit" name="submit" id="submit" value="Invite" />
+        </li>
+
+    </ul>
+</form>
+</div>
+<% include ../partials/footer %>

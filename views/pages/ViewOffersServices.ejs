@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>View Offers</title>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/javascripts/typeahead.min.js"></script>
+<script src="http://listjs.com/no-cdn/list.js"></script>
+<script src="http://listjs.com/no-cdn/list.pagination.js"></script>
+<script type="application/javascript">
+    $(document).ready(function () {
+        //create a dynamic url
+        var producthost = location.protocol + '//' + location.host + '/productsearch?key=%QUERY';
+        var servicehost = location.protocol + '//' + location.host + '/servicesearch?key=%QUERY';
+//       configure listPagnitation for product offers
+        var monkeyList = new List('test-list', {
+            valueNames: ['name'],
+            page: 5,
+            plugins: [ListPagination({})]
+        });
+        // configure listPagination for service offers
+        var monkeyList = new List('test-listService', {
+            valueNames: ['nameService'],
+            page: 5,
+            plugins: [ListPagination({})]
+        });
+        $('input.typeahead').typeahead({
+            name: 'countries',
+            remote: producthost,
+            limit: 10
+        });
+        $('#typeaheadservice').typeahead({
+            name: 'service',
+            remote: servicehost,
+            limit: 10
+        })
+
+        $('input[type="radio"]').click(function () {
+            if ($(this).attr("value") == "Product") {
+                $("#ServiceCategories").hide();
+                $("#ServiceContent").hide();
+                $("#ProductCategories").show();
+                $("#ProductContent").show();
+                document.getElementById("option").value = "Product";
+            }
+            if ($(this).attr("value") == "Service") {
+                $("#ProductCategories").hide();
+                $("#ProductContent").hide();
+                $("#ServiceCategories").show();
+                $("#ServiceContent").show();
+                document.getElementById("optionS").value = "Service";
+            }
+        });
+        $("#ServiceCategories").hide();
+        $("#ServiceContent").hide();
+
+        //check if option is specified for trade before submitting
+        $("#search").click(function () {
+            if (document.getElementById("option").value === '') {
+                notify();
+            }
+
+        })
+
+    });
+    function notify() {
+        $(this).notifyMe(
+                'bottom', // Position
+                'error', // Type
+                'Trade Option', // Title
+                'Please specify offer search option or type', // Description
+                200,// Velocity of notification
+                2000 // (optional) Time of delay to close automatically
+        );
+    }
+</script>
+</head>
+<div class="content">
+    <ul class="rd_btn1">
+        <li>
+            <label for="TradeOption">Trade Option:</label>
+            <input type="radio" name="TradeOptionProduct" value="Product">Product
+            <input type="radio" name="TradeOptionProduct" value="Service">Service
+        </li>
+    </ul>
+    <!--for showing product offers-->
+    <div id="ProductContent" name="ProductContent" class="content">
+        <form class="contact_form" method="post" action="/ViewOffersServices" name="contact_form"
+              xmlns="http://www.w3.org/1999/html">
+            <li>
+                <input type="text" id="option" name="option" value="" required="true"
+                       hidden="true"/>
+            </li>
+            <ul>
+                <li class="src-offer">
+                    <input type="text" name="typeahead" class="typeahead tt-query" autocomplete="off" spellcheck="false"
+                           placeholder="Search for offers">
+                    <select id="ProductCategories" class="typeahead tt-query" name="ProductCategories">
+                        <% for (var i in ProCat){ %>
+                        <option><%= ProCat[i].CategoryName %>
+                            <% } %>
+                        </option>
+                    </select>
+                    <select id="ServiceCategories" class="typeahead tt-query" hidden="true" name="ServiceCategories">
+                        <% for (var i in SerCat){ %>
+                        <option><%= SerCat[i].ServiceCatName %>
+                            <% } %>
+                        </option>
+                    </select>
+                    <input id="search" name="search" class="search" type="submit" value="Find Product"/>
+                </li>
+            </ul>
+        </form>
+        <div id="test-list">
+            <ul class="list">
+                <% if(data.length) {
+                for(var i = 0;i < data.length;i++) { %>
+                <li>
+                    <p class="name">
+                     <img src="/images/<%= data[i].img0 %>"style="width: 113px; height: 113px;"border="5"/>
+                    <div class="article">
+                        <a href="/ProductOffers/<%= data[i].ProductOfferID %>"><h3><%= data[i].ProductName %></h3></a>
+                        <span class="head">Product Details:</span> <%= data[i].OfferDetails %><br>
+                        <span class="head">Category:</span>        <%= data[i].CategoryName %><br>
+                        <span class="head">Product Value:</span><strong> <%= data[i].ValueCurrency %> <%= data[i].ProductValue %> </strong><br>
+                        <span class="head">Preferred Product:</span><%= data[i].PreferredOffer %><br>
+                        <span class="spl-chr">Posted By:<a href="/profile/<%= data[i].CustomerID %>"><%= data[i].FirstName %></a></span>
+                    </div>
+                    </p>
+                </li>
+                <% }
+                }
+                else{ %>
+                <br>
+
+                <div class="records">
+                    <strong>No Records</strong><br>
+                    <span>No Product Listed/Offered For Trade</span>
+                </div>
+                <% } %>
+            </ul>
+            <ul class="pagination"></ul>
+        </div>
+    </div>
+    <!--for showing services-->
+    <div id="ServiceContent" name="ServiceContent" class="content">
+        <form class="contact_form" method="post" action="/ViewOffersServices" name="contact_form"
+              xmlns="http://www.w3.org/1999/html">
+            <li>
+                <input type="text" id="optionS" name="optionS" value="" required="true"
+                       hidden="true"/>
+            </li>
+            <ul>
+                <li class="src-offer">
+                    <input type="text" name="typeaheadservice" id="typeaheadservice" class="typeahead tt-query"
+                           autocomplete="off" spellcheck="false"
+                           placeholder="Search for offers">
+                    <select id="ProductCategories" class="typeahead tt-query" hidden="true" name="ProductCategories">
+                        <% for (var i in ProCat){ %>
+                        <option><%= ProCat[i].CategoryName %>
+                            <% } %>
+                            a
+                        </option>
+                    </select>
+                    <select id="ServiceCategories" class="typeahead tt-query" name="ServiceCategories">
+                        <% for (var i in SerCat){ %>
+                        <option><%= SerCat[i].ServiceCatName %>
+                            <% } %>
+                        </option>
+                    </select>
+                    <input id="search" name="search" class="search" type="submit" value="Find Service"/>
+                </li>
+            </ul>
+        </form>
+        <div id="test-listService">
+            <ul class="list">
+                <% if(ServiceData.length) {
+                for(var i = 0;i < ServiceData.length;i++) { %>
+                <li>
+                    <p class="nameService">
+                    <div class="product-detail">
+                        <a href="/ServiceOffers/<%= ServiceData[i].ServiceOfferID %>">
+                            <h3><%= ServiceData[i].ServiceName %></h3></a>
+                        <span><%= ServiceData[i].ServiceDescription %></span><br>
+                        <span class="head2">Category:</span><span
+                                class="head3"><%= ServiceData[i].ServiceCatName %></span><br>
+                        <span>Preferred Service:<%= ServiceData[i].PreferredService %></span><br>
+                        <span class="head1">Duration:</span><span
+                                class="head2"><%= ServiceData[i].Duration %></span><br>
+                        <span class="spl-chr">Posted By:<a href="/profile/<%= ServiceData[i].CustomerID%>"><%= ServiceData[i].FirstName %></a></span>
+                    </div>
+                    </p>
+                </li>
+                <% }
+                }
+                else{ %>
+                <br>
+
+                <div class="records">
+                    <strong>No Records</strong><br>
+                    <span>No Service Listed/Offered For Trade</span>
+                </div>
+                <% } %>
+            </ul>
+            <ul class="pagination"></ul>
+        </div>
+    </div>
+</div>
+<% include ../partials/footer %>

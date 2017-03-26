@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>Respond Peer Service Offer</title>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/javascripts/typeahead.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //create a dynamic url
+        var hostpeer = location.protocol + '//' + location.host + '/searchpeer?key=%QUERY';
+        $('input.typeahead').typeahead({
+            name: 'countries',
+            remote: hostpeer,
+            limit: 10
+        });
+    });
+
+    function clearForm() {
+        document.getElementById("contact").reset();
+    }
+    function GetDuration() {
+        var date1 = new Date(document.getElementById("StartDate").value);
+        var date2 = new Date(document.getElementById("EndDate").value);
+        var diff = Math.floor(date2.getTime() - date1.getTime());
+        var day = 1000 * 60 * 60 * 24;
+
+        var days = Math.floor(diff / day);
+        var months = Math.floor(days / 31);
+        var years = Math.floor(months / 12);
+        if (days < 31) {
+            document.getElementById("myDuration").value = days + " days ";
+        } else if (months < 12) {
+            document.getElementById("myDuration").value = months + " months ";
+        }
+        else {
+            document.getElementById("myDuration").value = years + " years";
+        }
+
+    }
+</script>
+</head>
+<div class="content">
+    <form id="contact" class="contact_form" method="post" action="/InterestedPeerService">
+        <% for (var i in CustomerDetails){ %>
+        <ul>
+            <li>
+                <h2>
+                    Offer  <%= CustomerDetails[i].FirstName %> <%= CustomerDetails[i].LastName %> <%= CustomerDetails[i].MiddleName %></h2>
+                <br>
+                <span class="required">All the fields marked with * are required </span>
+            </li>
+            <li class="bs-example">
+                <label for="tags" style="color:green;">Search for Friends:</label>
+                <input type="text" name="typeahead" class="typeahead tt-query"
+                       value="<%= CustomerDetails[i].FirstName %> <%= CustomerDetails[i].LastName %> <%= CustomerDetails[i].MiddleName %>"
+                       readonly="true" autocomplete="off" spellcheck="false" placeholder="Search for Customer">
+            </li>
+            <li>
+                <label for="tags" style="color:green;">Email Address:</label>
+                <input type="text" name="Email" id="Email" value="<%= CustomerDetails[i].EmailAddress %>"
+                       readonly="true"/>
+            </li>
+            <li>
+                <label for="name">Service Name: *</label>
+                <input type="text" name="ServiceName" required="required"
+                       title="Please Enter Name of Service you wish to Offer!">
+            </li>
+            <li>
+                <label for="ServiceDetails">Service Details: *</label>
+                <input type="textarea" name="ServiceDescription" required="required"
+                       title="Please Enter Service Description">
+            </li>
+            <li>
+                <label for="ServiceCategory">Service Category</label>
+                <select name="ServiceCatName" required="required" title="Please Select Service Category">
+                    <% for (var i in SerCategories){ %>
+                    <option><%= SerCategories[i].ServiceCatName %>
+                        <% } %>
+                </select>
+            </li>
+            <li>
+                <label for="StartDate">Start Date: *</label>
+                <input id="StartDate" type="date" name="StartDate" onchange="GetDuration()" required="required"
+                       title="Please specify date of service delivery">
+            </li>
+            <li>
+                <label for="EndDate">End Date: *</label>
+                <input id="EndDate" type="date" name="EndDate" onchange="GetDuration()" required="required"
+                       title="Please Specify Date you wish to complete !">
+            </li>
+            <li>
+                <label for="Duration">Duration</label>
+                <input id="myDuration" type="text" name="Duration" value="" readonly>
+            </li>
+            <li>
+                <label for="PreferredService">Preferred Service: *</label>
+                <input id="PreferredService" type="text" name="PreferredService" required="required"
+                       title="Please specify your preferred service" value="">
+            </li>
+            <li>
+                <label for="Date Available ">Availability Date: *</label>
+                <input type="date" name="AvailabilityDate">
+            </li>
+            <li class="submit">
+                <input type="text" name="PeerID" id="PeerID" value="<%= PeerID %>" hidden="true"/>
+                <input type="button" name="Clear" id="clear" value="Cancel" onclick="clearForm()"/>
+                <input type="submit" name="submit" id="submit" value="Send Offer"/>
+            </li>
+        </ul>
+        <% } %>
+    </form>
+</div>
+<% include ../partials/footer %>

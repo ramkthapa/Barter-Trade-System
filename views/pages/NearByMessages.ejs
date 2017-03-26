@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>Message</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/javascripts/notifyme.js"></script>
+    <script type="text/javascript" src="/javascripts/typeahead.min.js"></script>
+    <script src="/javascripts/clientjavascripts/SendMessage.js"></script>
+</head>
+<div class="content">
+    <ul class="rd_trade">
+        <li>
+            <label for="TradeOption">Trade Option: *</label>
+            <input type="radio" id="TradeOptionProduct" name="TradeOptionProduct" onchange="clearForm()"
+                   value="Product">Product
+            <input type="radio" id="TradeOptionService" name="TradeOptionProduct" onchange="clearForm()"
+                   value="Service">Service
+        </li>
+
+    </ul>
+    <!--for product-->
+    <div id="ProductContent" name="ProductContent" class="content">
+        <form id="contact" class="contact_form">
+            <ul>
+                <li>
+                    <h1 style="color: #00b7ff">Private Message</h1>
+
+                    <h3 style="color: #000000">Contact NearBy Customer... <%= Name %></h3>
+                    <h4 style="color:  lightcoral">Select the product you want to offer to customer </h4>
+                </li>
+                <li class="bs-example">
+                    <label for="tags" style="color:#00b7ff;">Search Product: *</label>
+                    <input type="text" ID="typeahead" name="typeahead" class="typeahead tt-query" autocomplete="off"
+                           spellcheck="false"
+                           placeholder="Search for your products" required="true" title="No product searched">
+
+                </li>
+                <li>
+                    <input type="text" id="productlink" name="producklink" value="" hidden="true"/>
+                </li>
+                <li>
+                    <label for="tags">Recipient Email* :</label>
+                    <!--  <input id="tags" name="tags">-->
+                    <input id="to" name="to" type="text" style="color:black;" value="<%= Email %>" readonly="true"
+                           placeholder="Recipient E-mail ID" required="true" title="Please email is required!"/>
+                <li>
+                    <label for="Subject">Subject* :</label>
+                    <input id="subject" type="text" placeholder="Write Subject" required="true"
+                           title="Please enter the subject of your message"/>
+                </li>
+                <li>
+                    <label for="Message">Message* :</label>
+                    <textarea class="private_text" id="content" required="true"
+                              title="Please message content cannot be empty"
+                              placeholder="Please type your message to the customer here"></textarea>
+                </li>
+                <li class="submit">
+                    <input type="button" name="clear" id="clear" value="Cancel" onclick="clearForm()"/>
+                    <input type="button" id="send_email" value="Send Message"/>
+                    <span id="message"></span>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <!--for service-->
+    <div id="ServiceContent" name="ServiceContent" class="content">
+
+        <form id="contactservice" class="contact_form">
+            <ul>
+                <li>
+                    <h1 style="color: #00b7ff">Private Message</h1>
+
+                    <h3 style="color: #000000">Contact NearBy Customer... <%= Name %></h3>
+                    <h4 style="color: lightcoral">Select the service you want to offer to customer </h4>
+                </li>
+                <li class="bs-example">
+                    <label for="typeahead" style="color:#00b7ff;">Search Service*:</label>
+                    <input type="text" id="typeaheadservice" name="typeaheadservice" class="typeahead tt-query"
+                           autocomplete="off" spellcheck="false"
+                           placeholder="Search for your services">
+                </li>
+                <li>
+                    <input type="text" id="servicelink" name="servicelink" value="" hidden/>
+                </li>
+                <li>
+                    <label for="tags">Recipient Email* :</label>
+                    <!--  <input id="tags" name="tags">-->
+                    <input id="toservice" name="toservice" type="text" style="color:black;" value="<%= Email %>"
+                           readonly="true" placeholder="Recipient E-mail ID" required="true"
+                           title="Please email is required!"/>
+
+                <li>
+                    <label for="Subject">Subject* :</label>
+                    <input id="subjectservice" type="text" placeholder="Write Subject" required="true"
+                           title="Please enter the subject of your message"/>
+                </li>
+                <li>
+                    <label for="Message">Message* :</label>
+                    <textarea class="private_text" id="contentservice" required="true"
+                              title="Please message content cannot be empty"
+                              placeholder="Please type your message to the customer here"></textarea>
+                </li>
+                <li class="submit">
+                    <input type="button" name="clear" id="clearservice" value="Cancel" onclick="clearFormService()"/>
+                    <input type="button" id="send_emailservice" value="Send Message"/>
+                    <span id="messageservice"></span>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+<% include ../partials/footer %>

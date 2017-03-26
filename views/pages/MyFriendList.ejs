@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>My Friend List</title>
+</head>
+<div class="content">
+    <form class="data_details" method="Get" action="/MyFriendList" name="contact_form" xmlns="http://www.w3.org/1999/html">
+        <h1 style="color: #00b7ff">My Friend List</h1>
+    <% if(data.length) {
+    for(var i = 0;i < data.length;i++) { %>
+        <div class="product-detail">
+            <img src="/images/<%= data[i].ProfilePicture %>">
+        <div class="article">
+            <h3><%= data[i].FirstName+" "+data[i].LastName+" "+data[i].MiddleName %></h3>
+            <span>Positive  (+):  <%= data[i].PosReputation %></span><br>
+            <span>Neutral (+/-):  <%= data[i].NeutralReputation %></span><br>
+            <span>Negative  (-):  <%= data[i].NegReputation %></span>
+            <% if(data[i].Status==0){ %>
+            <span class="spl-chr">Date Added:  <%= data[i].DateAdded.toDateString() %></span><span
+                    class="friendlist_edit"><a class="edit" href="/MyFriendList/<%= data[i].FriendID %>">Delete</a><a
+                        class="edit" href="/AcceptFriend/<%= data[i].FriendID %>">Accept</a></span>
+          <%  }else{ %>
+            <span class="spl-chr">Date Added:  <%= data[i].DateAdded.toDateString() %></span><span
+                    class="friendlist_edit"><a class="edit"
+                                               href="/MyFriendList/<%= data[i].FriendID %>">Delete</a></span>
+            <% } %>
+        </div>
+        </div>
+    <% }
+    }else{ %>
+        <br>
+        <div class="records">
+            <strong>No Records</strong><br>
+            <span>You have no trade friends in your account</span>
+        </div>
+    <% } %>
+    </form>
+</div>
+</div>
+<% include ../partials/footer %>

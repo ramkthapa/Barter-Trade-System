@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>Service Details</title>
+</head>
+<div class="content">
+    <!--for showing services-->
+    <div id="ServiceContent" name="ServiceContent" class="content">
+        <form class="contact_form" method="Get" action="" name="contact_form" xmlns="http://www.w3.org/1999/html">
+            <h1>Service Details</h1>
+            <%if(!serviceresults.length){%>
+            <div class="records">
+            <span>No Records</span><br>
+            <span>You have not offered any service</span>
+          </div>
+            <%}%>
+            <%for (var i in serviceresults){%>
+            <div class="member mem_format">
+
+                <table class="pro-detail pro_format">
+
+                    <tr>
+                        <td>
+                            <strong>Service Name</strong>:
+                        </td>
+                        <td>
+                            <%=serviceresults[i].ServiceName %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Service Details</strong>:
+                        </td>
+                        <td>
+                            <%=serviceresults[i].ServiceDescription  %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Service Category</strong>:
+                        </td>
+                        <td>
+                            <%= serviceresults[i].ServiceCatName %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Published Date</strong>:
+                        </td>
+                        <td>
+                            <%= serviceresults[i].PublishedDate.toDateString() %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Duration</strong>:
+                        </td>
+                        <td>
+                            <%= serviceresults[i].Duration %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Start Date</strong>:
+                        </td>
+                        <td>
+                            <%= serviceresults[i].StartDate.toDateString() %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>End Date</strong>:
+                        </td>
+                        <td>
+                            <%=serviceresults[i].EndDate.toDateString() %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Preferred Service</strong>:
+                        </td>
+                        <td>
+                            <%=serviceresults[i].PreferredService %>
+                        </td>
+                    </tr>
+                </table>
+
+                <%if(serviceresults[i].CustomerID==loginuser){%>
+                <tr>
+                    <td></td>
+                    <td><a class="delete" href="/EditOfferService/<%=serviceresults[i].ServiceOfferID%>">Edit Offer</a></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><a class="delete" href="/DeleteService/<%=serviceresults[i].ServiceOfferID%>">Delete</a></td>
+                </tr>
+                <%}else{%>
+                <tr>
+                    <td></td>
+                    <td><a class="delete" href="/PingService/<%= serviceresults[i].ServiceOfferID %>">Ping!</a></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><a class="delete" href="/ServiceMessages/<%= serviceresults[i].ServiceOfferID %>">Contact
+                            Trader!</a></td>
+                </tr>
+                <%}%>
+            </div>
+            <%}%>
+        </form>
+    </div>
+</div>
+<% include ../partials/footer %>

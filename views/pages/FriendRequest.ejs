@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>Add Friends</title>
+    <script type="text/javascript" src="/javascripts/notifyme.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascripts/typeahead.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //create a dynamic url
+            var host = location.protocol + '//' + location.host + '/search?key=%QUERY';
+            $('input.typeahead').typeahead({
+                name: 'countries',
+                remote: host,
+                limit: 10
+            });
+        })
+        function clearForm() {
+            document.getElementById("contact").reset();
+        }
+
+    </script>
+</head>
+<div class="content">
+    <form id="contact" class="contact_form" method="Post" action="/FriendRequest">
+        <ul class="frn_rq">
+            <li>
+                <h1 style="color: #00b7ff">Add Friends</h1>
+            </li>
+            <li class="bs-example">
+                <input type="text" name="typeahead" id="typeahead" class="typeahead tt-query" autocomplete="off"
+                       spellcheck="false" placeholder="Search for Customer" required="true"
+                       title="Please search for customer you wish to invite">
+            </li>
+
+            <li class="submit">
+                <input type="button" name="Cancel" id="Cancel" value="Cancel" onclick="clearForm()"/>
+                <input type="submit" name="submit" id="submit" value="Invite"/>
+            </li>
+
+        </ul>
+    </form>
+</div>
+<% include ../partials/footer %>

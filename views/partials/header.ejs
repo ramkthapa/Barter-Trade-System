@@ -1,0 +1,66 @@
+<link rel="stylesheet" type="text/css" href='/stylesheets/all.css' />
+<link rel="stylesheet" type="text/css" href='/stylesheets/notifyme.css' />
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/javascripts/notifyme.js"></script>
+<script type="application/javascript">
+    $(function () {
+        var active = $.now();
+        var doc = $(document);
+        doc.on("mousemove", function () {
+            active = $.now();
+        });
+
+        //check user activity on the site
+        setInterval(function () {
+            if ($.now() - active > 600000) {
+                var host = location.protocol + '//' + location.host + '/logout';
+                window.open(host, "_self");
+            }
+        }, 600000);
+
+    });
+    window.onbeforeunload = function () {
+        myUnloadEvent();
+    }
+    //create a dynamic url
+    var host = location.protocol + '//' + location.host + '/notification/';
+    setInterval(notify, 300000);
+    function notify(){
+        $.get(host, function (data) {
+            if (typeof(data.Name)!=='undefined'){
+                $(this).notifyMe(
+                        'top', // Position
+                        'info', // Type
+                        'Notification', // Title
+                         data.Name+', '+data.Details+' on '+data.Date+'<br>Click <a href="/Notifications">here</a> here to open your notifications list', // Description
+                        '100', // Velocity of notification
+                        '5000'// (optional) Time of delay to close automatically
+                )
+            }
+        });
+    }
+</script>
+<div id="header">
+    <div class="header-holder">
+            <ul class=" login">
+                <li><a href="/logins">Login</a></li>
+                <li><a href="#">My Account</a>
+                    <ul class="drop">
+                        <li><a href="/signup">Create New Account</a></li>
+                        <li><a href="/shipping">My Shipping Details</a></li>
+                        <li><a href="/ViewTransaction">My Transactions</a></li>
+                        <li><a href="/Notifications">My Notifications</a>
+                        <li><a href="/MyFriendList">My Friend List</a></li>
+                        <li><a href="/Offers">Manage Offers</a></li>
+                        <li><a href="/MyWishList">My Wish List</a></li>
+                        <li><a href="/MyGroups">My Groups</a></li>
+                        <li><a href="/profile">My Profile</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        <strong class="logo"><a href="#">Design Company</a></strong>
+        <span class="slogan">He who wants to barter, usually knows what is best for him</span>
+    </div>
+</div>

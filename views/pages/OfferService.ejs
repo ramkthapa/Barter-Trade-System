@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<%include ../partials/header %>
+<%include ../partials/navigation %>
+<head>
+    <title>Service Offers</title>
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script>
+    function GetDuration() {
+        var date1=new Date(document.getElementById("StartDate").value);
+        var date2=new Date(document.getElementById("EndDate").value);
+        var diff = Math.floor( date2.getTime()-date1.getTime());
+        var day = 1000 * 60 * 60 * 24;
+
+        var days = Math.floor(diff/day);
+        var months = Math.floor(days/31);
+        var years = Math.floor(months/12);
+        if(days<31)
+        {
+            document.getElementById("myDuration").value=days + " days ";
+        }else if(months<12){
+            document.getElementById("myDuration").value=months + " months ";
+        }
+        else
+        {
+            document.getElementById("myDuration").value=years + " years";
+        }
+
+    }
+    function clearForm() {
+        document.getElementById("contact").reset();
+    }
+</script>
+</head>
+<div class="content">
+    <form id="contact" class="contact_form" method="post" action="/OfferService">
+    <ul>
+        <li>
+            <h1>Offer Service</h1>
+            <span class="required">All the fields marked with * are required </span>
+        </li>
+        <li>
+            <label for="name">Service Name: *</label>
+            <input type="text" name="ServiceName" required="required" title="Please Enter Name of Service you wish to Offer!">
+        </li>
+        <li>
+            <label for="ServiceDetails">Service Details: *</label>
+            <textarea rows="4" cols="48" name="ServiceDescription" required="required" title="Please Enter Service Description"form="contact"></textarea>
+        </li>
+        <li>
+            <label for="ServiceCategory">Service Category</label>
+            <select name="ServiceCatName" required="required" title="Please Select Service Category">
+                <%for (var i in SerCategories){%>
+                <option><%=SerCategories[i]%>
+                    <%}%>
+            </select>
+        </li>
+        <li>
+            <label for="StartDate">Start Date: *</label>
+            <input id="StartDate" type="date" name="StartDate" onchange="GetDuration()" required="required" title="Please specify date of service delivery">
+         </li>
+        <li>
+            <label for="EndDate">End Date: *</label>
+            <input id ="EndDate"type="date" name="EndDate" onchange="GetDuration()" required="required" title="Please Specify Date you wish to complete !">
+        </li>
+        <li>
+            <label for="Duration">Duration</label>
+            <input id ="myDuration" type="text" name="Duration" value="" readonly>
+        </li>
+        <li>
+            <label for="PreferredService">Preferred Service: *</label>
+            <input id ="PreferredService" type="text" name="PreferredService" required="required" title="Please specify your preferred service" value="">
+        </li>
+        <li>
+            <label for="Date Available ">Availability Date: *</label>
+            <input type="date" name="AvailabilityDate">
+        </li>
+        <li class="submit">
+        <input type="button" name="Clear" id="clear" value="Cancel" onclick="clearForm()"/>
+        <input type="submit" name="submit" id="submit" value="Publish" />
+        </li>
+    </ul>
+</form>
+</div>
+<% include ../partials/footer %>
+
+

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>Respond Peer Product Offer</title>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/javascripts/typeahead.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //create a dynamic url
+        var host = location.protocol + '//' + location.host + '/searchpeer?key=%QUERY';
+        $('input.typeahead').typeahead({
+            name: 'countries',
+            remote: host,
+            limit: 10
+        });
+        $("#uploadPreview0").click(function () {
+            $("input[id='uploadImage0']").click();
+        });
+        $("#uploadPreview1").click(function () {
+            $("input[id='uploadImage1']").click();
+        });
+        $("#uploadPreview2").click(function () {
+            $("input[id='uploadImage2']").click();
+        });
+        $("#uploadPreview3").click(function () {
+            $("input[id='uploadImage3']").click();
+        });
+        var allVals = [];
+        $('input[type="checkbox"]').click(function () {
+            allVals.push($(this).val());
+            $("#SelectedAreas").val(allVals);
+        });
+    });
+    function PreviewImage0() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("uploadImage0").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("uploadPreview0").src = oFREvent.target.result;
+        };
+
+    }
+    ;
+    function PreviewImage1() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("uploadImage1").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("uploadPreview1").src = oFREvent.target.result;
+        };
+
+    }
+    ;
+    function PreviewImage2() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("uploadImage2").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("uploadPreview2").src = oFREvent.target.result;
+        };
+
+    }
+    ;
+    function PreviewImage3() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("uploadImage3").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("uploadPreview3").src = oFREvent.target.result;
+        };
+
+    }
+    ;
+    function clearForm() {
+        document.getElementById("contact").reset();
+    }
+</script>
+</head>
+<div class="content">
+
+    <div id="ProductContent" name="ProductContent" class="content">
+        <form class="contact_form" id="contact" method="Post" action="/InterestedPeerProduct"
+              enctype="multipart/form-data">
+            <% for (var i in CustomerDetails){ %>
+            <ul>
+                <li>
+                    <h2>
+                        Offer  <%= CustomerDetails[i].FirstName %> <%= CustomerDetails[i].LastName %> <%= CustomerDetails[i].MiddleName %></h2>
+                    <br>
+                    <span class="required">All the fields marked with * are required </span>
+                </li>
+                <li class="bs-example">
+                    <label for="tags" style="color:green;">Search for Friends:</label>
+                    <input type="text" name="typeahead" class="typeahead tt-query"
+                           value="<%= CustomerDetails[i].FirstName %> <%= CustomerDetails[i].LastName %> <%= CustomerDetails[i].MiddleName %>"
+                           readonly="true" autocomplete="off" spellcheck="false" placeholder="Search for Customer">
+                </li>
+                <li>
+                    <label for="tags" style="color:green;">Email Address:</label>
+                    <input type="text" name="Email" id="Email" value="<%= CustomerDetails[i].EmailAddress %>"
+                           readonly="true"/>
+                </li>
+
+                <li>
+                    <label for="name">Product/Item Name: *</label>
+                    <input type="text" name="ProductName" required="required" title="Please Enter Product Name:"/>
+                </li>
+                <li>
+                    <label for="ProductCondition">Condition: *</label>
+                    <select name="Condition" required="required" title="Please Specify Product Condition">
+                        <option>New</option>
+                        <option>Used</option>
+                        <option>Barely used,Good Condition</option>
+                        <option>More than 1 year old, Good Condition</option>
+                        <option>More than 3 years old,working</option>
+                    </select>
+                </li>
+                <li>
+                    <label for="ProductDetails">Product Details: *</label>
+                    <textarea rows="4" cols="48" name="ProductDetails" form="contact" required="true"
+                              title="Please detailed description of your product/item"></textarea>
+                </li>
+                <li>
+                    <label for="ProductCategory">Product Category: *</label>
+                    <select name="CategoryName" required="required" title="Please Specify Product Category">
+                        <% for (var i in ProCategories){ %>
+                        <option><%= ProCategories[i].CategoryName %>
+                            <% } %>
+                    </select>
+                </li>
+                <li class="value">
+                    <label for="ProductValue">Item/Product Value: *</label>
+                    <input type="number" name="ProductValue" required="required"
+                           title="Please Specify the value of your item/product" min="1" max="100000">
+                    <select name="CurrencyName" required="required" title="Specify currency">
+                        <option>EUR €</option>
+                        <option>USD $</option>
+                        <option>GBP £</option>
+                    </select>
+                </li>
+                <li>
+                    <label for="PreferredProduct">Preferred Item/Product: *</label>
+                    <input type="text" name="PreferredProduct" required="required"
+                           title="Please Specify Preferred Product/Item">
+                </li>
+                <li>
+                    <label for="ProcessingTime">Processing Time: *</label>
+                    <select name="ProcessingTime" required="required" title="Please Specify Processing time">
+                        <option>Now</option>
+                        <option>1 business day</option>
+                        <option>1-2 business days</option>
+                        <option>1-3 business days</option>
+                        <option>4-5 business days</option>
+                        <option>1 week</option>
+                        <option>2-3 weeks</option>
+                    </select>
+                </li>
+                <li class="mycheck">
+                    <label for="ShipsT0">Shipping Options: *</label>
+                    <input type="checkbox" id="Asia" name=ShipsT0" value="Asia"/>
+                    <label for="">Asia</label>
+                    <input type="checkbox" id="Africa" name="ShipsT0" value="Africa"/>
+                    <label for="">Africa</label>
+                    <input type="checkbox" id="Europe" name="ShipsT0" value="Europe"/>
+                    <label for="">Europe</label>
+                </li>
+                <li class="mycheck">
+                    <label for="ShipsT0"></label>
+                    <input type="checkbox" id="SAmerica" name="ShipsT0" value="S. America"/>
+                    <label for="">S. America</label>
+                    <input type="checkbox" id="NAmerica" name="ShipsT0" value="N.America"/>
+                    <label for="">N. America</label>
+                    <input type="checkbox" name="ShipsT0" value="LocalPickUp"/>
+                    <label for="">Pickup</label>
+                </li>
+                <input type="text" id="SelectedAreas" name="SelectedAreas" required="required" hidden="true">
+                <li class="value">
+                    <label for="ShippingCost">Shipping/Postal Cost: *</label>
+                    <input type="number" name="ShippingCost" required="required"
+                           title="Please Specify the Shipping Cost">
+                    <select name="shipCurrencyName" required="required" title="Specify currency">
+                        <option>EUR €</option>
+                        <option>USD $</option>
+                        <option>GBP £</option>
+                    </select>
+                </li>
+                <li>
+                    <span class="required_pht">Click to upload product images,first image will be use as product preview</span>
+                    <label>Upload Product Images: *</label>
+                    <img id="uploadPreview0" style="width: 100px; height: 100px;" border="0"/>
+                    <img id="uploadPreview1" style="width: 100px; height: 100px;"/>
+                    <img id="uploadPreview2" style="width: 100px; height: 100px;"/>
+                    <img id="uploadPreview3" style="width: 100px; height: 100px;"/>
+                    <input id="uploadImage0" type="file" name="myPhoto0" style="display: none;"
+                           onchange="PreviewImage0();" required="required"
+                           title="Please upload an image of Photograph of Product"/>
+                    <input id="uploadImage1" type="file" name="myPhoto1" style="display: none;"
+                           onchange="PreviewImage1();"/>
+                    <input id="uploadImage2" type="file" name="myPhoto2" style="display: none;"
+                           onchange="PreviewImage2();"/>
+                    <input id="uploadImage3" type="file" name="myPhoto3" style="display: none;"
+                           onchange="PreviewImage3();"/>
+                </li>
+                <li class="submit">
+                    <input type="text" name="PeerID" id="PeerID" value="<%= PeerID %>" hidden="true"/>
+                    <input type="button" name="clear" id="clear" value="Cancel" onclick="clearForm()"/>
+                    <input type="submit" name="submit" id="submit" value="Send Offer"/>
+                </li>
+
+            </ul>
+            <% } %>
+        </form>
+    </div>
+</div>
+<% include ../partials/footer %>

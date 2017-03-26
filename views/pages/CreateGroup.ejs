@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<%include ../partials/header %>
+<%include ../partials/navigation %>
+<head>
+    <title>Create Group</title>
+    <script src="/javascripts/clientjavascripts/AddGroups.js"></script>
+</head>
+<div class="content">
+    <form id="contact" class="contact_form" method="post" action="/AddGroup" enctype="multipart/form-data"
+          onsubmit="return validateform()">
+    <ul>
+        <h1 style="color: #00b7ff">Add Group</h1>
+        <li>
+            <label for="name">Group Name:*</label>
+            <input type="text" id="GroupName" name="GroupName">
+        </li>
+        <br>
+        <li>
+            <label for="AddPhoto">Add Photo: *</label>
+            <img id="goupimg" style="width: 100px; height: 100px;" />
+            <input id="uploadgrpimg" type="file" id="GroupPhoto" name="GroupPhoto" onchange="PreviewImage()">
+        </li>
+        <li class="submit">
+        <input type="button" name="Cancel" id="Cancel" value="Cancel" />
+        <input type="submit" name="submit" id="submit" value="Create Group" />
+        </li>
+    </ul>
+</form>
+</div>
+<% include ../partials/footer %>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>Customer Profile</title>
+</head>
+<div class="content">
+        <div class="profile">
+                    <div class="pro-img">
+                        <%for(var i in result){%>
+                        <img src="/images/<%= result[i].ProfilePicture%>">
+                        <div class="feedbck">
+                            <h2>Feedback</h2>
+                            <p>Positive <span> <%=result[i].PosReputation %></span></p>
+                            <p>Negative <span> <%=result[i].NegReputation%> </span></p>
+                            <p>Neutral <span> <%=result[i].NeutralReputation%> </span></p>
+                        </div>
+                        <%}%>
+                    </div>
+            <table class="pro-detail1">
+                        <%for (var i in result){%>
+                            <tr><th>Customer Details</th></tr>
+                            <tr>
+                                <td>
+                                    <strong>Customer Name</strong>:
+                                </td>
+                                <td>
+                                    <%=result[i].FirstName+" "+result[i].LastName+" "+result[i].MiddleName %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Gender</strong>:
+                                </td>
+                                <td>
+                                    <%=result[i].Gender  %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Date Joined</strong>:
+                                </td>
+                                <td>
+                                    <%=result[i].DateJoined.toLocaleDateString()  %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Email Address</strong>:
+                                </td>
+                                <td>
+                                    <%= result[i].EmailAddress %>
+                                </td>
+                            </tr>
+                            <tr>
+                               <td></td>
+                                <td><a href="/EditCustomer">Edit Details </a></td>
+                            </tr>
+                        <%}%>
+
+            <%for (var i in ShipResults){%>
+            <tr><th>Shipping Details</th></tr>
+            <tr>
+                <td>
+                    <strong>Address Name</strong>:
+                </td>
+                <td>
+                    <%=ShipResults[i].AddressName %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>City</strong>:
+                </td>
+                <td>
+                    <%=ShipResults[i].City  %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>State</strong>:
+                </td>
+                <td>
+                    <%=ShipResults[i].State  %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Postal Code</strong>:
+                </td>
+                <td>
+                    <%= ShipResults[i].PostalCode %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Country</strong>:
+                </td>
+                <td>
+                    <%= ShipResults[i].Country %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Mobile Number</strong>:
+                </td>
+                <td>
+                    <%= ShipResults[i].MobileNumber %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Other Number</strong>:
+                </td>
+                <td>
+                    <%= ShipResults[i].OtherNumber %>
+                </td>
+            </tr>
+            <tr>
+                <td></td><td><a href="/EditShipping">Edit Shipping Details </a></td>
+            </tr>
+            <%}%>
+        </table>
+        </div>
+</div>
+<% include ../partials/footer %>

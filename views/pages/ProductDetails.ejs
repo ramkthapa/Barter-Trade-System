@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head><title>Product Details</title></head>
+<div class="content">
+    <!--for showing product offers-->
+    <div id="ProductContent" name="ProductContent" class="content">
+    <form class="contact_form" method="Get" action="" name="contact_form" xmlns="http://www.w3.org/1999/html">
+        <h1>Product Details</h1>
+        <%if(!results.length){%>
+        <div class="records">
+            <strong>No Records</strong><br>
+            <span>You have not offered any product</span>
+        </div>
+        <%}%>
+        <%for (var i in results){%>
+        <div class="member">
+            <table class="pro-detail">
+
+                <tr>
+                    <td>
+                        <strong>Name</strong>:
+                    </td>
+                    <td>
+                        <%=results[i].ProductName %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Offer Details</strong>:
+                    </td>
+                    <td>
+                        <%=results[i].OfferDetails  %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Offer Date</strong>:
+                    </td>
+                    <td>
+                        <%= results[i].OfferDate.toDateString() %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Category Name</strong>:
+                    </td>
+                    <td>
+                        <%= results[i].CategoryName %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Condition</strong>:
+                    </td>
+                    <td>
+                        <%= results[i].Condition %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Product Value</strong>:
+                    </td>
+                    <td>
+                       <%=results[i].ValueCurrency%>  <%= results[i].ProductValue %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Processing Time</strong>:
+                    </td>
+                    <td>
+                        <%=results[i].ProcessingTime %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Ships To:</strong>:
+                    </td>
+                    <td>
+                        <%=results[i].ShipsTo %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>ShippingCost</strong>:
+                    </td>
+                    <td>
+                        <%=results[i].shipCurrencyName%>  <%= results[i].ShippingCost %>
+                    </td>
+                </tr>
+            </table>
+            <ul class="enlarge">
+                <!--We give the list a class so that we can style it seperately from other unordered lists-->
+                <li>
+                    <img src="/images/<%= results[i].img0 %>" width="150px" height="100px"/>
+                    <span> <!--span contains the popup image-->
+                    <img src="/images/<%= results[i].img0 %>" alt="Deckchairs"/>
+                    </span>
+                </li>
+                <li>
+                    <img src="/images/<%= results[i].img1 %>" width="150px" height="100px"/>
+                         <span> <!--span contains the popup image-->
+                    <img src="/images/<%= results[i].img1 %>" alt="Deckchairs"/>
+                    </span>
+                </li>
+                <li>
+                    <img src="/images/<%= results[i].img2 %>" width="150px" height="100px"/>
+                     <span> <!--span contains the popup image-->
+                    <img src="/images/<%= results[i].img2 %>" alt="Deckchairs"/>
+                    </span>
+                </li>
+                <li>
+                    <img src="/images/<%= results[i].img3 %>" width="150px" height="100px"/>
+                         <span> <!--span contains the popup image-->
+                    <img src="/images/<%= results[i].img3 %>" alt="Deckchairs"/>
+                    </span>
+                </li>
+            </ul>
+            <%if(results[i].CustomerID==loginuser){%>
+            <div class="customer_delete">
+                <span><a class="delete" href="/EditOfferProduct/<%=results[i].ProductOfferID%>">Edit Offer</a></span>
+                <span><a class="delete" href="/DeleteOffers/<%=results[i].ProductOfferID%>">Delete</a></span>
+            </div>
+            <%}else{%>
+            <div class="customer_delete">
+                <span><a class="delete" href="/PingOffers/<%=results[i].ProductOfferID%>">Ping Trader!</a></span>
+                <span><a class="delete" href="/PrivateMessages/<%=results[i].ProductOfferID%>">Contact Trader!</a></span>
+            </div>
+            <%}%>
+    </div>
+        <%}%>
+        </form>
+    </div>
+</div>
+<% include ../partials/footer %>

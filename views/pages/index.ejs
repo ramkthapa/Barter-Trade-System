@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<%include ../partials/header %>
+<%include ../partials/navigation %>
+<head>
+    <title>Home:B-Commerce</title>
+</head>
+<div id="main">
+	<div class="content">
+		<div class="box-left">
+			<%if(username.FN){ %>
+            <span style="color: #000000" class="welcome_txt"> <b>Welcome </b><%= username.FN %></span><br><br>
+			<%}%>
+			<h2 class="text-wedo">what we do</h2>
+
+            <p style="color: #000000" align="Justify">Direct barter doesn't require payment in money (when money is in
+                short supply) hence will be utilized when there is little information about the credit worthiness of
+                trade partners or there is a lack of trust.</b></b></p>
+
+		</div>
+		<div class="box-right">
+			<img src="images/girls-shopping.jpg" />
+		</div>
+	</div>
+</div>
+<% include ../partials/footer %>

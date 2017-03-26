@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<%include ../partials/header %>
+<%include ../partials/navigation %>
+<head>
+    <title>Add WishList</title>
+</head>
+<div class="content">
+    <form id="contact" class="contact_form" method="post" action="">
+    <ul>
+        <h1>Wish List</h1>
+        <li>
+            <label for="name">List Name:</label>
+            <input type="text" name="ListName" required="true" TITLE="Please provide name for your list">
+        </li>
+        <li>
+            <label for="name">Product/Service Name:</label>
+            <input type="text" name="ProServiceName" required="true" title="Please enter name of product or service">
+        </li>
+        <li>
+            <label for="ProductDetails">Detail Description</label>
+            <input type="textarea" name="Description" required="true"
+                   title="Please enter description or details of product or service">
+        </li>
+
+        <li class="sg-chk">
+            <label for ="Negotiation">Negotiation:</label>
+            <input type="checkbox" name="Negotiation" checked>
+        </li>
+        <li class="sg-chk">
+            <label for ="Publish">Publish:</label>
+            <input type="checkbox" name="Publish"  checked>
+        </li>
+        <li class="submit">
+        <input type="button" name="submit" id="submit" value="Cancel" />
+        <input type="submit" name="submit" id="submit" value="Create List" />
+        </li>
+
+    </ul>
+</form>
+</div>
+<% include ../partials/footer %>
+
+

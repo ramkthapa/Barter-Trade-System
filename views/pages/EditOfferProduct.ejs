@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<%include ../partials/header %>
+<%include ../partials/navigation %>
+<head>
+    <title>Edit Product Offers</title>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/javascripts/notifyme.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        //load images into gloabl variables
+        var img0 = document.getElementById("uploadPreview0").src;
+        var img1 = document.getElementById("uploadPreview1").src;
+        var img2 = document.getElementById("uploadPreview2").src;
+        var img3 = document.getElementById("uploadPreview1").src;
+        $("#uploadPreview0").click(function ()
+        {
+            $("input[id='uploadImage0']").click();
+        });
+        $("#uploadPreview1").click(function ()
+        {
+            $("input[id='uploadImage1']").click();
+        });
+        $("#uploadPreview2").click(function ()
+        {
+            $("input[id='uploadImage2']").click();
+        });
+        $("#uploadPreview3").click(function ()
+        {
+            $("input[id='uploadImage3']").click();
+        });
+         var allVals = [];
+         $('input[type="checkbox"]').click(function () {
+         allVals.push($(this).val());
+         $("#SelectedAreas").val(allVals);
+         });
+
+        $('#submit').on('click', function () {
+
+            if (document.getElementById("SelectedAreas").value == "") {
+                errornotify()
+                return false
+            } else if ((document.getElementById("newphoto").checked) && (document.getElementById("uploadImage0").value == "")) {
+                errornotify();
+                return false
+            } else if ((document.getElementById("newphoto").checked) && (document.getElementById("uploadImage1").value == "")) {
+                errornotify();
+                return false
+            } else if ((document.getElementById("newphoto").checked) && (document.getElementById("uploadImage2").value == "")) {
+                errornotify();
+                return false
+            } else if ((document.getElementById("newphoto").checked) && (document.getElementById("uploadImage3").value == "")) {
+                errornotify();
+                return false
+            }
+            else {
+                return true
+            }
+
+        })
+
+        $('#newphoto').click(function () {
+            if (document.getElementById("newphoto").checked) {
+                document.getElementById("uploadPreview0").src = "";
+                document.getElementById("uploadPreview1").src = "";
+                document.getElementById("uploadPreview2").src = "";
+                document.getElementById("uploadPreview3").src = "";
+            } else {
+                document.getElementById("uploadPreview0").src = img0;
+                document.getElementById("uploadPreview1").src = img1;
+                document.getElementById("uploadPreview2").src = img2;
+                document.getElementById("uploadPreview3").src = img3;
+            }
+
+
+        });
+    });
+
+    function PreviewImage0() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("uploadImage0").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("uploadPreview0").src = oFREvent.target.result;
+        };
+
+    }
+    function PreviewImage1() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("uploadImage1").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("uploadPreview1").src = oFREvent.target.result;
+
+        };
+
+    }
+    function PreviewImage2() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("uploadImage2").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("uploadPreview2").src = oFREvent.target.result;
+        };
+
+    }
+    function PreviewImage3() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("uploadImage3").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("uploadPreview3").src = oFREvent.target.result;
+        };
+
+    }
+    function clearForm() {
+        document.getElementById("contact").reset();
+    }
+    function errornotify() {
+        $(this).notifyMe(
+                'bottom', // Position
+                'error', // Type
+                'Required Field *', // Title
+                'Product update cannot be completed.Please complete all required fields marked with (*) and upload all images.', // Description
+                200,// Velocity of notification
+                2000 // (optional) Time of delay to close automatically
+        );
+    }
+</script>
+</head>
+    <div class="content">
+        <%for (var i in AllProducts){%>
+        <form class="contact_form" id="contact" method="Post" action="" enctype="multipart/form-data"
+              onsubmit="return validateform()">>
+
+        <ul>
+            <li>
+                <h1 style="color: #00b7ff">Edit Offer</h1>
+                <span class="required">All the fields marked with * are required </span>
+            </li>
+
+            <li>
+            <label for="name">Product/Item Name: *</label>
+            <input type="text" name="ProductName" value="<%=AllProducts[i].ProductName%>"required="required" title="Please Enter Product Name:"/>
+            </li>
+            <li>
+                <label for="ProductCondition">Condition: *</label>
+                <select name="Condition" required="required" title="Please Specify Product Condition">
+                    <option><%=AllProducts[i].Condition%></option>
+                    <option>New</option>
+                    <option>Used</option>
+                    <option>Barely used,Good Condition</option>
+                    <option>More than 1 year old, Good Condition</option>
+                    <option>More than 3 years old,working</option>
+                </select>
+            </li>
+            <li>
+                <label for="ProductDetails">Product Details: *</label>
+                <textarea rows="4" cols="48" name="ProductDetails" form="contact" required="true" title="Please detailed description of your product/item"><%=AllProducts[i].OfferDetails%></textarea>
+            </li>
+            <li>
+            <label for="ProductCategory">Product Category: *</label>
+              <select name="CategoryName" required="required" title="Please Specify Product Category">
+                  <option><%=AllProducts[i].CategoryName%></option>
+                  <%for (var i in ProCategories){%>
+                  <option><%=ProCategories[i].CategoryName%></option>
+                  <% } %>
+              </select>
+            </li>
+            <% for(var i in AllProducts){ %>
+            <li class="value">
+                <label for="ProductValue">Item/Product Value: *</label>
+                <input type="number" name="ProductValue" value="<%= AllProducts[i].ProductValue %>" required="required"
+                       title="Please Specify the value of your item/product" min="1" max="100000">
+                <select name="CurrencyName" required="required" title="Specify currency">
+                    <option><%=AllProducts[i].ValueCurrency%></option>
+                    <option>EUR €</option>
+                    <option>USD $</option>
+                    <option>GBP £</option>
+                    <%}%>
+                </select>
+            </li>
+            <li>
+            <label for="PreferredProduct">Preferred Item/Product: *</label>
+            <input type="text" name="PreferredProduct" value="<%=AllProducts[i].PreferredOffer%>"required="required" title="Please Specify Preferred Product/Item">
+            </li>
+            <li>
+                <label for="ProcessingTime">Processing Time: *</label>
+                <select name="ProcessingTime" required="required" title="Please Specify Processing time">
+                    <%for(var i in AllProducts){%>
+                    <option><%=AllProducts[i].ProcessingTime%></option>
+                    <option>Now</option>
+                    <option>1 business day</option>
+                    <option>1-2 business days</option>
+                    <option>1-3 business days</option>
+                    <option>4-5 business days</option>
+                    <option>1 week</option>
+                    <option>2-3 weeks</option>
+                    <%}%>
+                </select>
+            </li>
+            <li class="sg-chk">
+                <label for ="Suggestion">Give Suggestion: *</label>
+                <input type="checkbox" name="suggest" value="<%=AllProducts[i].SuggestOffers%>" checked>
+            </li>
+            <li class="mycheck">
+                <label for="ShipsT0">Shipping Options: *</label>
+                <input type="checkbox" id="Asia" name=ShipsT0" value="Asia" />
+                <label for="">Asia</label>
+                <input type="checkbox" id="Africa" name="ShipsT0" value="Africa"/>
+                <label for="">Africa</label>
+                <input type="checkbox" id="Europe" name="ShipsT0" value="Europe" />
+                <label for="">Europe</label>
+            </li>
+            <li class="mycheck">
+                <label for="ShipsT0"></label>
+                <input type="checkbox" id="SAmerica" name="ShipsT0" value="S. America" />
+                <label for="">S. America</label>
+                <input type="checkbox" id="NAmerica" name="ShipsT0" value="N.America" />
+                <label for="">N. America</label>
+                <input type="checkbox"  name="ShipsT0" value="LocalPickUp" />
+                <label for="">Pickup</label>
+            </li>
+            <input type="text" id="SelectedAreas"name="SelectedAreas" required="required" hidden="true">
+            <li class="value">
+                <label for="ShippingCost">Shipping/Postal Cost: *</label>
+                <input type="number" name="ShippingCost" value="<%=AllProducts[i].ShippingCost%>" required="required" title="Please Specify the Shipping Cost">
+                <select name="shipCurrencyName" required="required" title="Specify currency">
+                    <option><%=AllProducts[i].shipCurrencyName%></option>
+                    <option>EUR €</option>
+                    <option>USD $</option>
+                    <option>GBP £</option>
+                </select>
+            </li>
+            <li class="sg-chk">
+                <label for="newphoto">Upload New Photo:</label>
+                <input type="checkbox" name="newphoto" id="newphoto" value="NewPhoto">
+            </li>
+            <li>
+                <span class="required_pht">Click to upload product images,first image will be use as product preview</span>
+                <label>Upload Product Images: *</label>
+
+                <% if(!AllProducts[i].img0 ){ %>
+                <img src="/images/defaultproductimage.png" id="uploadPreview0" style="width: 100px; height: 100px;"
+                     border="0"/>
+                <% }else{ %>
+                <img src="/images/<%= AllProducts[i].img0 %>" id="uploadPreview0" style="width: 100px; height: 100px;"
+                     border="0"/>
+                <% } %>
+                <% if(AllProducts[i].img1 == null){ %>
+                <img src="/images/defaultproductimage.png" id="uploadPreview1" style="width: 100px; height: 100px;"/>
+                <% }else{ %>
+                <img src="/images/<%= AllProducts[i].img1 %>" id="uploadPreview1" style="width: 100px; height: 100px;"/>
+                <% } %>
+                <% if(!AllProducts[i].img2){ %>
+                <img src="/images/defaultproductimage.png" id="uploadPreview2" style="width: 100px; height: 100px;"/>
+                <% }else{ %>
+                <img src="/images/<%= AllProducts[i].img2 %>" id="uploadPreview2" style="width: 100px; height: 100px;"/>
+                <% } %>
+                <% if(!AllProducts[i].img3){ %>
+                <img src="/images/defaultproductimage.png" id="uploadPreview3" style="width: 100px; height: 100px;"/>
+                <% }else{ %>
+                <img src="/images/<%= AllProducts[i].img3 %>" id="uploadPreview3" style="width: 100px; height: 100px;"/>
+                <% } %>
+                <input id="uploadImage0" type="file" name="myPhoto0" style="display: none;"
+                       onchange="PreviewImage0();"/>
+                <input id="uploadImage1" type="file" name="myPhoto1" style="display: none;"
+                       onchange="PreviewImage1();"/>
+                <input id="uploadImage2" type="file" name="myPhoto2" style="display: none;"
+                       onchange="PreviewImage2();"/>
+                <input id="uploadImage3" type="file" name="myPhoto3" style="display: none;"
+                       onchange="PreviewImage3();"/>
+            </li>
+            <li class="submit">
+                <input type="button" name="clear" id="clear" value="Cancel" onclick="clearForm()"/>
+                <input type="submit" name="submit" id="submit" value="Update Offer"/>
+            </li>
+        </ul>
+
+    </form>
+        <%}%>
+    </div>
+<% include ../partials/footer %>
+
+

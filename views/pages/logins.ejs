@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>Customer:Login</title>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+    var socket = io();
+    $('form').submit(function(){
+        socket.on('newCustomerList',function(list){
+            $('#messages').append($('<li>').text(list));
+        })
+    });
+</script>
+</head>
+<div class="content">
+    <form class="contact_form" id="contact" method="post" action="/logins">
+        <ul>
+            <li>
+                <h1>Login or Create Account</h1>
+                <span class="required_log">If you have an account with us, log in using your email address </span>
+            </li>
+            <li>
+                <label>Email: *</label>
+                <input type="text"  required="required" title="Please enter your email address eg: you@someone.com" name="username">
+            </li>
+            <li>
+                <label>Password: *</label>
+                <input type="password"  required="required" title="Please enter password" name="password">
+            </li>
+            <li class="submit">
+                <input type="submit" name="submit" id="submit" value="Login" />
+            </li>
+
+            <li>
+                <span>By creating an account with us, you will be able to place an offer, negotiate with customers,<br>trade your products
+           ,trade among your friend list and groups,view and track your offers<br>and deals in your account and more...<br>
+            <a href="/signup"><h3 class="required">Create Account</h3></a></span>
+            </li>
+        </ul>
+    </form>
+</div>
+<% include ../partials/footer %>

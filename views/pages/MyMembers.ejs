@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>My Group Members</title>
+</head>
+<div class="content">
+    <form class="contact_form" method="Get" action="/MyMembers" name="contact_form" xmlns="http://www.w3.org/1999/html">
+        <h1>Group Members</h1>
+        <div class="member">
+            <%if(!result.length){%>
+                    <span>No Records</span><br>
+                    <span>You have not added friends to this group</span>
+                </fieldset>
+            <%}%>
+            <table class="pro-detail">
+                <% for (var i in result){ %>
+                <tr>
+                    <td>
+                        <strong>Name</strong>:
+                    </td>
+                    <td>
+                        <%= result[i].FirstName + " " + result[i].LastName + " " + result[i].MiddleName %>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <strong>Date Joined</strong>:
+                    </td>
+                    <td>
+                        <%= result[i].Joined.toLocaleDateString() %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Email Address</strong>:
+                    </td>
+                    <td>
+                        <%= result[i].EmailAddress %>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><a class="delete" href="/MyMembersDelete/<%= result[i].GroupMembersID %>">Delete</a></td>
+                </tr>
+                <% } %>
+            </table>
+        </div>
+    </form>
+</div>
+<% include ../partials/footer %>

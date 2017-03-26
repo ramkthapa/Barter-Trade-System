@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>My WishList</title>
+</head>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+<div class="content">
+    <form class="data_details" method="Get" action="/MyGroups" name="contact_form" xmlns="http://www.w3.org/1999/html">
+        <h1>My WishList</h1>
+    <% if(data.length) {
+    for(var i = 0;i < data.length;i++) { %>
+        <div class="personal-detail">
+            <h2>Product/Service Name: </h2><span><%= data[i].Product_ServiceName %></span><br>
+            <h2>Details: </h2> <span><%= data[i].Description %></span><br>
+            <h2>Date Added: </h2>  <span><%= data[i].PublishedDate.toLocaleDateString() %></span>
+            <a class="delete"  href="/MyWishList/<%=data[i].WishListID %>">Delete</a>
+        </div>
+    <% }
+    }else{ %>
+        <br>
+        <div class="records">
+            <strong>No Records</strong><br>
+            <span>You have not created a wish list in your account</span>
+        </div>
+    <% } %>
+    </form>
+</div>
+</div>
+<% include ../partials/footer %>

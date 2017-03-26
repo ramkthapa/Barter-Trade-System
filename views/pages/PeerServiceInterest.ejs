@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>Peer Service Interest</title>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#ChkDecline").click(function () {
+            document.getElementById('Decline').value = "Declined";
+        });
+    });
+</script>
+</head>
+<div class="content">
+    <!--for showing product offers-->
+    <form class="contact_form" method="POST" action="" name="contact_form"
+          xmlns="http://www.w3.org/1999/html">
+        <h1>Your Friend's Offer</h1>
+        <% if(!PeerOffer.length){ %>
+        <div class="records">
+            <strong>Offer Completed</strong><br>
+            <span>Offer/Transaction Completed !. Link expired</span>
+        </div>
+        <% }else{ %>
+        <% for (var i in PeerOffer){ %>
+        <!--  <div class="member">-->
+        <div class="member mem_format">
+            <table class="pro-detail">
+                <tr>
+                    <td>
+                        <strong>Name</strong>:
+                    </td>
+                    <td class="format_name">
+                        <%= PeerOffer[i].ServiceName %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Offer Details</strong>:
+                    </td>
+                    <td>
+                        <%= PeerOffer[i].ServiceDescription %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Published Date</strong>:
+                    </td>
+                    <td>
+                        <%= PeerOffer[i].PublishedDate.toDateString() %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Category:</strong>:
+                    </td>
+                    <td class="format_catname">
+                        <%= PeerOffer[i].ServiceCatName %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Date Available:</strong>:
+                    </td>
+                    <td class="format_catname">
+                        <%= PeerOffer[i].DateAvailable.toDateString() %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Duration:</strong>:
+                    </td>
+                    <td class="format_catname">
+                        <%= PeerOffer[i].Duration %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Start Date</strong>:
+                    </td>
+                    <td class="format_con">
+                        <%= PeerOffer[i].StartDate.toDateString() %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>End Date</strong>:
+                    </td>
+                    <td class="format_value">
+                        <%= PeerOffer[i].EndDate.toDateString() %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Preferred Service</strong>:
+                    </td>
+                    <td>
+                        <%= PeerOffer[i].PreferredService %>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+        <% } %>
+        <div class="submit_offer">
+            <input type="text" value="" id="Decline" name="Decline" hidden="true">
+            <input type="submit" name="submit" id="submit" value="Interested"/>
+            <input type="submit" name="ChkDecline" id="ChkDecline" value="Decline Offer"/>
+        </div>
+        <% } %>
+    </form>
+</div>
+<% include ../partials/footer %>

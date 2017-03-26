@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>Peer Product Interest</title>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#ChkDecline").click(function () {
+            document.getElementById('Decline').value = "Declined";
+        });
+    });
+</script>
+</head>
+    <!--for showing product offers-->
+    <div id="ProductContent" name="ProductContent" class="content">
+        <form class="contact_form" method="POST" action="" name="contact_form"
+              xmlns="http://www.w3.org/1999/html">
+            <h1>Your Friend's Offer</h1>
+            <% if(!PeerOffer.length){ %>
+            <div class="records">
+                <strong>Offer Completed</strong><br>
+                <span>Offer/Transaction Completed !. Link expired</span>
+            </div>
+            <% }else{ %>
+            <% for (var i in PeerOffer){ %>
+            <!--  <div class="member">-->
+            <div class="member mem_format">
+                <table class="pro-detail">
+                    <tr>
+                        <td>
+                            <strong>Name</strong>:
+                        </td>
+                        <td class="format_name">
+                            <%= PeerOffer[i].ProductName %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Offer Details</strong>:
+                        </td>
+                        <td>
+                            <%= PeerOffer[i].OfferDetails %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Offer Date</strong>:
+                        </td>
+                        <td>
+                            <%= PeerOffer[i].OfferDate.toDateString() %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Category:</strong>:
+                        </td>
+                        <td class="format_catname">
+                            <%= PeerOffer[i].CategoryName %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Condition</strong>:
+                        </td>
+                        <td class="format_con">
+                            <%= PeerOffer[i].Condition %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Product Value</strong>:
+                        </td>
+                        <td class="format_value">
+                            <%= PeerOffer[i].ValueCurrency %>  <%= PeerOffer[i].ProductValue %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Pro.Time</strong>:
+                        </td>
+                        <td>
+                            <%= PeerOffer[i].ProcessingTime %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Ships To:</strong>:
+                        </td>
+                        <td>
+                            <%= PeerOffer[i].ShipsTo %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Ship Cost</strong>:
+                        </td>
+                        <td class="format_value">
+                            <%= PeerOffer[i].shipCurrencyName %>  <%= PeerOffer[i].ShippingCost %>
+                        </td>
+                    </tr>
+                </table>
+                <ul class="enlarge">
+                    <!--We give the list a class so that we can style it seperately from other unordered lists-->
+                    <li>
+                        <img src="/images/<%= PeerOffer[i].img0 %>" width="150px" height="100px"/>
+                    <span> <!--span contains the popup image-->
+                    <img src="/images/<%= PeerOffer[i].img0 %>" alt="Deckchairs"/>
+                    </span>
+                    </li>
+                    <li>
+                        <img src="/images/<%= PeerOffer[i].img1 %>" width="150px" height="100px"/>
+                         <span> <!--span contains the popup image-->
+                    <img src="/images/<%= PeerOffer[i].img1 %>" alt="Deckchairs"/>
+                    </span>
+                    </li>
+                    <li>
+                        <img src="/images/<%= PeerOffer[i].img2 %>" width="150px" height="100px"/>
+                     <span> <!--span contains the popup image-->
+                    <img src="/images/<%= PeerOffer[i].img2 %>" alt="Deckchairs"/>
+                    </span>
+                    </li>
+                    <li>
+                        <img src="/images/<%= PeerOffer[i].img3 %>" width="150px" height="100px"/>
+                         <span> <!--span contains the popup image-->
+                    <img src="/images/<%= PeerOffer[i].img3 %>" alt="Deckchairs"/>
+                    </span>
+                    </li>
+                </ul>
+            </div>
+            <% } %>
+            <div class="submit_offer">
+                <input type="text" value="" id="Decline" name="Decline" hidden="true">
+                <input type="submit" name="submit" id="submit" value="Interested"/>
+                <input type="submit" name="ChkDecline" id="ChkDecline" value="Decline Offer"/>
+            </div>
+            <% } %>
+        </form>
+    </div>
+<% include ../partials/footer %>

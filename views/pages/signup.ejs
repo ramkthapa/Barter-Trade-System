@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+<head>
+    <title>Sign up:New Customer</title>
+    <script type="text/javascript" src="/javascripts/notifyme.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#uploadPreview0").click(function () {
+            $("input[id='uploadImage0']").click();
+        });
+    });
+    function PreviewImage() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("uploadphoto").files[0]);
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("uploadPreview0").src = oFREvent.target.result;
+        };
+
+    };
+    function checkForm(form)
+    {
+        if(form.username.value == "") {
+            errornotify();//("Error: Username cannot be blank!");
+            form.username.focus();
+            return false;
+        }
+        var re = /^\w+$/;
+        if(form.Password.value != "" && form.Password.value == form.ConfirmPassword.value) {
+            if(form.Password.value.length < 6) {
+                errornotify();//("Error: Password must contain at least six characters!");
+                form.Password.focus();
+                return false;
+            }
+            if(form.Password.value == form.username.value) {
+                errornotify();//("Error: Password must be different from Username!");
+                form.Password.focus();
+                return false;
+            }
+            re = /[0-9]/;
+            if(!re.test(form.Password.value)) {
+                errornotify();//("Error: password must contain at least one number (0-9)!");
+                form.Password.focus();
+                return false;
+            }
+            re = /[a-z]/;
+            if(!re.test(form.Password.value)) {
+                errornotify();//("Error: password must contain at least one lowercase letter (a-z)!");
+                form.Password.focus();
+                return false;
+            }
+            re = /[A-Z]/;
+            if(!re.test(form.Password.value)) {
+                errornotify();//("Error: password must contain at least one uppercase letter (A-Z)!");
+                form.Password.focus();
+                return false;
+            }
+        } else {
+            errornotify();//("Error: Please check that you've entered and confirmed your password!");
+            form.Password.focus();
+            return false;
+        }
+
+        errornotify("You entered a valid password: " + form.Password.value);
+        return true;
+    }
+    function clearForm() {
+        document.getElementById("contact").reset();
+    }
+    function errornotify() {
+        $(this).notifyMe(
+                'bottom', // Position
+                'error', // Type
+                'Required Field *', // Title
+                'Sorry!, your message cannot be sent.Please check and complete all required fields marked with (*).', // Description
+                200,// Velocity of notification
+                2000 // (optional) Time of delay to close automatically
+        );
+    }
+</script>
+</head>
+<div class="content">
+    <form class="contact_form" id="contact" method="post" action="/signup" enctype="multipart/form-data" onsubmit="return checkForm(this)">
+        <ul>
+            <li>
+                <h1>Sign Up</h1>
+                <span class="required">All the fields marked with * are required </span>
+            </li>
+            <li>
+                <label for="Firstname">First name: *</label>
+                <input id="first-name" type="text" name="FirstName" value="" required="true"
+                       title="Please enter your first name"/>
+            </li>
+            <li class="up_img">
+                <img id="uploadPreview0" src="images/defaultimage.png" style="width: 100px; height: 100px;" border="0" />
+                <input id="uploadphoto" type="file" required="true" title="Please upload image" name="myPhoto0" onchange="PreviewImage()">
+            </li>
+            <li>
+                <label for="Lastname">Last Name: *</label>
+                <input id="Last-name" type="text" name="LastName" required="required" title="Please Enter your LastName or Surname" value=""/>
+            </li>
+
+            <li>
+                <label for="MiddleName">Middle Name:</label>
+                <input id="Middle-name" type="text" name="MiddleName" value=""/>
+            </li>
+            <li>
+                <label for="DOB">Date of Birth: *</label>
+                <input id="dob" type="date" name="DOB" required="required" title="Please specify your date of birth" value=""/>
+            </li>
+            <li class="rd_btn">
+                <label for="gender">Gender: *</label>
+                <input id="gender" type="radio" name="sex" value="male" checked/>Male
+                <input id="gender" type="radio" name="sex" value="female"/>Female
+            </li>
+            <li>
+                <span class="required_pht">Please Chose your login username and password </span>
+            </li>
+
+            <li>
+                <label>Email: *</label>
+                <input id="username" name="username" type="email" required="required" title="Please enter your email address">
+            </li>
+            <li>
+                <label>Password: *</label>
+                <input type="password" required="required" name="password">
+            </li>
+            <li>
+                <label>Confirm Password: *</label>
+                <input type="password" required="required" name="ConfirmPassword">
+            </li>
+            <li class="submit">
+                <input type="button" name="clear" id="clear" value="Cancel" onclick="clearForm()" />
+                <input type="submit" name="submit" id="submit" value="Sign Up" />
+            </li>
+
+            <li>
+                <span class="signup_links">NOTE: If you already have an account ? Please <a href="/logins" >Login</a>
+                    or go <a href="/"> Home</a>.</span>
+            </li>
+        </ul>
+    </form>
+</div>
+<% include ../partials/footer %>
